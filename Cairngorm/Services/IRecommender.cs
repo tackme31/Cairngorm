@@ -5,6 +5,6 @@ namespace Cairngorm.Services
 {
     public interface IRecommender
     {
-        List<Item> GetRecommedations(int count);
+        List<Item> GetRecommedations(string recommenderName, int count);
     }
 }

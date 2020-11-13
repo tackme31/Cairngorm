@@ -1,3 +1,4 @@
+using Cairngorm.Settings;
 using Sitecore;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq;
@@ -23,11 +24,18 @@ namespace Cairngorm.Services
             TagsResolver = tagsResolver;
         }
 
-        public List<Item> GetRecommedations(int count = 10)
+        public List<Item> GetRecommedations(string recommenderName, int count = 10)
         {
             if (count <= 0)
             {
                 throw new InvalidOperationException($"'{nameof(count)}' should be a positive integer.");
+            }
+
+            var config = RecommenderConfiguration.Create(assert: true);
+            var setting = config.GetSetting(recommenderName);
+            if (setting == null)
+            {
+                throw new InvalidOperationException($"The specified recommender does not exist. (Name: {recommenderName})");
             }
 
             var index = GetSearchIndex();
@@ -37,36 +45,36 @@ namespace Cairngorm.Services
                 query = ApplyFilterQuery(query);
 
                 // Template filtering
-                if (!KnownSettings.SearchTemplates.Any())
+                if (!setting.SearchTemplates.Any())
                 {
-                    var templatesPred = KnownSettings.SearchTemplates.Aggregate(
+                    var templatesPred = setting.SearchTemplates.Aggregate(
                         PredicateBuilder.False<T>(),
                         (acc, id) => acc.Or(item => item.TemplateId == id));
                     query = query.Filter(templatesPred);
                 }
 
                 // Stored items filtering
-                if (KnownSettings.FilterStoredItems)
+                if (setting.FilterStoredItems)
                 {
                     // Dedupe IDs
                     var itemIds = new HashSet<ID>();
-                    GetIdsFromCookie().ForEach(id => itemIds.Add(id));
+                    GetIdsFromCookie(setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
 
                     query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
 
                 }
 
                 // Context item filtering
-                if (KnownSettings.FilterContextItem)
+                if (setting.FilterContextItem)
                 {
                     query = query.Filter(item => item.ItemId != Context.Item.ID);
                 }
 
                 // Boosting predicate
-                var tagsWeight = GetTagsWeight();
+                var tagsWeight = GetTagsWeight(setting);
                 var boosting = tagsWeight.Keys.Aggregate(
                     PredicateBuilder.Create<T>(item => item.Name.MatchWildcard("*").Boost(0.0f)),
-                    (acc, tag) => acc.Or(item => item[KnownSettings.SearchField].Equals(tag).Boost(tagsWeight[tag])));
+                    (acc, tag) => acc.Or(item => item[setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
 
                 return query
                     .Where(boosting)
@@ -84,9 +92,9 @@ namespace Cairngorm.Services
             .Filter(item => item.Paths.Contains(ItemIDs.ContentRoot))
             .Filter(item => item.Language == Context.Language.Name);
 
-        private IDictionary<string, float> GetTagsWeight()
+        private IDictionary<string, float> GetTagsWeight(RecommenderSetting setting)
         {
-            var tags = GetIdsFromCookie()
+            var tags = GetIdsFromCookie(setting.CookieInfo.Name)
                 .Select(id => Context.Database.GetItem(id))
                 .Where(item => item != null)
                 .SelectMany(TagsResolver.GetItemTags)
@@ -102,20 +110,20 @@ namespace Cairngorm.Services
 
                 if (tagsWeight.ContainsKey(tag))
                 {
-                    tagsWeight[tag] += 1.0f * KnownSettings.BoostMultiplicand;
+                    tagsWeight[tag] += 1.0f * setting.BoostMultiplicand;
                 }
                 else
                 {
-                    tagsWeight[tag] = 1.0f * KnownSettings.BoostMultiplicand;
+                    tagsWeight[tag] = 1.0f * setting.BoostMultiplicand;
                 }
             }
 
             return tagsWeight;
         }
 
-        private IList<ID> GetIdsFromCookie()
+        private IList<ID> GetIdsFromCookie(string cookieName)
         {
-            var cookieValue = HttpContext.Current.Request.Cookies[KnownSettings.Cookie.Name]?.Value ?? string.Empty;
+            var cookieValue = HttpContext.Current.Request.Cookies[cookieName]?.Value ?? string.Empty;
             return cookieValue
                 .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(idStr => ID.Parse(idStr, ID.Null))

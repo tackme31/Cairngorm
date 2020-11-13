@@ -1,5 +1,5 @@
+using Cairngorm.Settings;
 using Sitecore;
-using Sitecore.Data.Items;
 using Sitecore.Pipelines.HttpRequest;
 using System;
 using System.Collections.Generic;
@@ -21,44 +21,50 @@ namespace Cairngorm.Pipelines
                 return;
             }
 
-            if (KnownSettings.SearchTemplates.Any() && KnownSettings.SearchTemplates.All(id => id != Context.Item.TemplateID))
-            {
-                return;
-            }
-
             if (!(Context.PageMode.IsPreview || Context.PageMode.IsNormal))
             {
                 return;
             }
 
-            var cookie = GetCookie();
-            var cookieItems = new Queue<string>(cookie.Value?.Split('|') ?? Array.Empty<string>());
-            cookieItems.Enqueue(Context.Item.ID.ToShortID().ToString());
-
-            while (cookieItems.Count > KnownSettings.StoredItemCount)
+            var config = RecommenderConfiguration.Create();
+            if (config == null)
             {
-                cookieItems.Dequeue();
+                return;
             }
 
-            HttpContext.Current.Response.Cookies[KnownSettings.Cookie.Name].Value = string.Join("|", cookieItems);
+            foreach (var settingName in config.SettingNames)
+            {
+                var setting = config.GetSetting(settingName);
+                if (setting == null)
+                {
+                    continue;
+                }
+
+                if (setting.SearchTemplates.Any() && setting.SearchTemplates.All(id => id != Context.Item.TemplateID))
+                {
+                    continue;
+                }
+
+                var cookie = GetCookie(setting.CookieInfo);
+                var cookieItems = new Queue<string>(cookie.Value?.Split('|') ?? Array.Empty<string>());
+                cookieItems.Enqueue(Context.Item.ID.ToShortID().ToString());
+
+                while (cookieItems.Count > setting.StoredItemsCount)
+                {
+                    cookieItems.Dequeue();
+                }
+
+                HttpContext.Current.Response.Cookies[setting.CookieInfo.Name].Value = string.Join("|", cookieItems);
+            }
         }
 
-        private HttpCookie GetCookie()
+        private HttpCookie GetCookie(CookieInfo info)
         {
-            var cookieName = KnownSettings.Cookie.Name;
-            var cookie = HttpContext.Current.Request.Cookies.Get(cookieName);
+            var cookie = HttpContext.Current.Request.Cookies.Get(info.Name);
             if (cookie == null)
             {
                 // Ensure cookie exists
-                cookie = new HttpCookie(cookieName)
-                {
-                    Expires = DateTime.Now.AddDays(KnownSettings.Cookie.LifeSpan),
-                    Domain = KnownSettings.Cookie.Domain,
-                    Path = KnownSettings.Cookie.Path,
-                    Secure = KnownSettings.Cookie.Secure,
-                    HttpOnly = KnownSettings.Cookie.HttpOnly,
-                };
-
+                cookie = info.ToHttpCookie();
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }
 
