@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Cairngorm.Services
 {
-    public interface IRecommendationService
+    public interface IRecommender
     {
         List<Item> GetRecommedations(int count);
     }

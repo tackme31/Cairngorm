@@ -14,11 +14,11 @@ using System.Web;
 
 namespace Cairngorm.Services
 {
-    public class DefaultRecommendationService<T> : IRecommendationService where T : SearchResultItem
+    public class DefaultRecommender<T> : IRecommender where T : SearchResultItem
     {
         protected IItemTagsResolver TagsResolver { get; }
 
-        public DefaultRecommendationService(IItemTagsResolver tagsResolver)
+        public DefaultRecommender(IItemTagsResolver tagsResolver)
         {
             TagsResolver = tagsResolver;
         }
