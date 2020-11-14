@@ -2,7 +2,7 @@
 using Sitecore.Diagnostics;
 using System.Collections.Generic;
 
-namespace Cairngorm.Settings
+namespace Cairngorm.Configurations
 {
     public class RecommenderSetting
     {

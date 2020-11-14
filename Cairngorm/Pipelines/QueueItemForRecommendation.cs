@@ -1,4 +1,4 @@
-using Cairngorm.Settings;
+using Cairngorm.Configurations;
 using Sitecore;
 using Sitecore.Pipelines.HttpRequest;
 using System;

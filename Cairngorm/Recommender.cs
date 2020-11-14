@@ -1,4 +1,6 @@
-using Cairngorm.Settings;
+using Cairngorm.Abstractions;
+using Cairngorm.Configurations;
+using Cairngorm.Services;
 using Sitecore;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq;
@@ -13,29 +15,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cairngorm.Services
+namespace Cairngorm
 {
-    public class DefaultRecommender<T> : IRecommender where T : SearchResultItem
+    public class Recommender<T> : RecommenderBase where T : SearchResultItem
     {
         protected IItemTagsResolver TagsResolver { get; }
+        protected RecommenderSetting Setting { get; }
 
-        public DefaultRecommender(IItemTagsResolver tagsResolver)
+        public Recommender(RecommenderSetting recommenderSetting, IItemTagsResolver tagsResolver)
         {
             TagsResolver = tagsResolver;
+            Setting = recommenderSetting;
         }
 
-        public List<Item> GetRecommedations(string recommenderName, int count = 10)
+        public override List<Item> GetRecommedations(int count = 10)
         {
             if (count <= 0)
             {
                 throw new InvalidOperationException($"'{nameof(count)}' should be a positive integer.");
-            }
-
-            var config = RecommenderConfiguration.Create(assert: true);
-            var setting = config.GetSetting(recommenderName);
-            if (setting == null)
-            {
-                throw new InvalidOperationException($"The specified recommender does not exist. (Name: {recommenderName})");
             }
 
             var index = GetSearchIndex();
@@ -45,36 +42,36 @@ namespace Cairngorm.Services
                 query = ApplyFilterQuery(query);
 
                 // Template filtering
-                if (!setting.SearchTemplates.Any())
+                if (!Setting.SearchTemplates.Any())
                 {
-                    var templatesPred = setting.SearchTemplates.Aggregate(
+                    var templatesPred = Setting.SearchTemplates.Aggregate(
                         PredicateBuilder.False<T>(),
                         (acc, id) => acc.Or(item => item.TemplateId == id));
                     query = query.Filter(templatesPred);
                 }
 
                 // Stored items filtering
-                if (setting.FilterStoredItems)
+                if (Setting.FilterStoredItems)
                 {
                     // Dedupe IDs
                     var itemIds = new HashSet<ID>();
-                    GetIdsFromCookie(setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
+                    GetIdsFromCookie(Setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
 
                     query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
 
                 }
 
                 // Context item filtering
-                if (setting.FilterContextItem)
+                if (Setting.FilterContextItem)
                 {
                     query = query.Filter(item => item.ItemId != Context.Item.ID);
                 }
 
                 // Boosting predicate
-                var tagsWeight = GetTagsWeight(setting);
+                var tagsWeight = GetTagsWeight(Setting);
                 var boosting = tagsWeight.Keys.Aggregate(
                     PredicateBuilder.Create<T>(item => item.Name.MatchWildcard("*").Boost(0.0f)),
-                    (acc, tag) => acc.Or(item => item[setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
+                    (acc, tag) => acc.Or(item => item[Setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
 
                 return query
                     .Where(boosting)

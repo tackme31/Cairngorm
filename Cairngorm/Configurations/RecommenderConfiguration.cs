@@ -2,7 +2,7 @@
 using Sitecore.Diagnostics;
 using System.Collections.Generic;
 
-namespace Cairngorm.Settings
+namespace Cairngorm.Configurations
 {
     public class RecommenderConfiguration
     {
@@ -12,7 +12,7 @@ namespace Cairngorm.Settings
 
         public static RecommenderConfiguration Create(bool assert = false)
         {
-            return Factory.CreateObject("cairngorm/recommender", assert) as RecommenderConfiguration;
+            return Factory.CreateObject("cairngorm/configuration", assert) as RecommenderConfiguration;
         }
 
         public RecommenderConfiguration()
