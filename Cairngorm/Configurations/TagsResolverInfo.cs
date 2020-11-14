@@ -1,6 +1,6 @@
 ﻿namespace Cairngorm.Configurations
 {
-    public class TagResolverInfo
+    public class TagsResolverInfo
     {
         public string FieldName { get; set; }
         public string FieldType { get; set; }

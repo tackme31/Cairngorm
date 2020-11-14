@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstractions\RecommenderBase.cs" />
-    <Compile Include="Configurations\TagResolverInfo.cs" />
+    <Compile Include="Configurations\TagsResolverInfo.cs" />
     <Compile Include="Pipelines\QueueItemForRecommendation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recommender.cs" />

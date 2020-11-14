@@ -14,7 +14,7 @@ namespace Cairngorm.Configurations
             Assert.ArgumentNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            TagResolverInfoList = new List<TagResolverInfo>();
+            TagsResolverInfoList = new List<TagsResolverInfo>();
         }
 
         public string Name { get; }
@@ -27,7 +27,7 @@ namespace Cairngorm.Configurations
         public bool FilterContextItem { get; set; } = true;
         public string SearchScope { get; set; } = string.Empty;
         public CookieInfo CookieInfo { get; set; } = new CookieInfo("cairngorm");
-        public List<TagResolverInfo> TagResolverInfoList { get; }
+        public List<TagsResolverInfo> TagsResolverInfoList { get; }
 
         public void AddSearchTemplate(XmlNode node)
         {
@@ -38,7 +38,7 @@ namespace Cairngorm.Configurations
             SearchTemplates.Add(templateId);
         }
 
-        public void AddTagResolverInfo(XmlNode node)
+        public void AddTagsResolverInfo(XmlNode node)
         {
             Assert.ArgumentNotNull(node, nameof(node));
 
@@ -57,7 +57,7 @@ namespace Cairngorm.Configurations
                 throw new System.ArgumentException("The 'fieldType' attribute is required.", "fieldName");
             }
 
-            var info = new TagResolverInfo()
+            var info = new TagsResolverInfo()
             {
                 FieldName = fieldName,
                 FieldType = fieldType,
@@ -65,7 +65,7 @@ namespace Cairngorm.Configurations
                 TargetField = targetField,
             };
 
-            TagResolverInfoList.Add(info);
+            TagsResolverInfoList.Add(info);
         }
     }
 }

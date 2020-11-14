@@ -15,7 +15,7 @@ namespace Cairngorm.Services
             Assert.IsNotNull(item, nameof(item));
 
             var tags = new List<string>();
-            foreach (var info in setting.TagResolverInfoList)
+            foreach (var info in setting.TagsResolverInfoList)
             {
                 var fieldType = info.FieldType.ToLowerInvariant();
                 if (fieldType == "text")
