@@ -92,7 +92,7 @@ namespace Cairngorm
         private IDictionary<string, float> GetTagsWeight(RecommenderSetting setting)
         {
             var tags = GetIdsFromCookie(setting.CookieInfo.Name)
-                .Select(id => Context.Database.GetItem(id))
+                .Select(Context.Database.GetItem)
                 .Where(item => item != null)
                 .SelectMany(TagsResolver.GetItemTags)
                 .Where(tag => !tag.IsNullOrEmpty());
