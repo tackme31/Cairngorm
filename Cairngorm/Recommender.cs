@@ -97,8 +97,8 @@ namespace Cairngorm
                 var tags = TagsResolver.GetItemTags(item, Setting).Where(tag => !string.IsNullOrWhiteSpace(tag));
                 foreach (var tag in tags)
                 {
-                    var delta = Setting.BoostGradually ? Setting.WeightPerMatching / index : Setting.WeightPerMatching;
-                    AddOrUpdate(tagsWeight, tag, delta);
+                    var weight = Setting.BoostGradually ? Setting.WeightPerMatching / index : Setting.WeightPerMatching;
+                    AddOrUpdate(tagsWeight, tag, weight);
                 }
             }
 
