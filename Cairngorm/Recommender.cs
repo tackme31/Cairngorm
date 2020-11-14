@@ -107,11 +107,11 @@ namespace Cairngorm
 
                 if (tagsWeight.ContainsKey(tag))
                 {
-                    tagsWeight[tag] += 1.0f * setting.BoostMultiplicand;
+                    tagsWeight[tag] += 1.0f * setting.WeightPerMatching;
                 }
                 else
                 {
-                    tagsWeight[tag] = 1.0f * setting.BoostMultiplicand;
+                    tagsWeight[tag] = 1.0f * setting.WeightPerMatching;
                 }
             }
 

@@ -17,7 +17,7 @@ namespace Cairngorm.Configurations
         public string SearchField { get; set; } = "_content";
         public List<ID> SearchTemplates { get; set; } = new List<ID>();
         public int StoredItemsCount { get; set; } = 10;
-        public float BoostMultiplicand { get; set; } = 1.0f;
+        public float WeightPerMatching { get; set; } = 1.0f;
         public bool FilterStoredItems { get; set; } = false;
         public bool FilterContextItem { get; set; } = true;
         public CookieInfo CookieInfo { get; set; } = new CookieInfo("cairngorm");
