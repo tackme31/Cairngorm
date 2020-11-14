@@ -31,7 +31,7 @@ namespace Cairngorm
         {
             if (count <= 0)
             {
-                throw new InvalidOperationException($"'{nameof(count)}' should be a positive integer.");
+                throw new ArgumentException($"'{nameof(count)}' should be a positive integer.");
             }
 
             var index = GetSearchIndex();
@@ -86,32 +86,37 @@ namespace Cairngorm
 
         private IDictionary<string, float> GetTagsWeight()
         {
-            var items = GetIdsFromCookie(Setting.CookieInfo.Name).Select(Context.Database.GetItem).Where(item => item != null);
-            var tags = items.SelectMany(item => TagsResolver.GetItemTags(item, Setting)).Where(tag => !string.IsNullOrWhiteSpace(tag));
             var tagsWeight = new Dictionary<string, float>();
-            foreach (var tag in tags)
+            var items = GetIdsFromCookie(Setting.CookieInfo.Name).Select(Context.Database.GetItem).Where(item => item != null);
+            foreach (var (item, index) in items.Select((item, index) => (item, index + 1)))
             {
-                if (tagsWeight.ContainsKey(tag))
+                var tags = TagsResolver.GetItemTags(item, Setting).Where(tag => !string.IsNullOrWhiteSpace(tag));
+                foreach (var tag in tags)
                 {
-                    tagsWeight[tag] += 1.0f * Setting.WeightPerMatching;
-                }
-                else
-                {
-                    tagsWeight[tag] = 1.0f * Setting.WeightPerMatching;
+                    var delta = Setting.BoostGradually ? Setting.WeightPerMatching / index : Setting.WeightPerMatching;
+                    AddOrUpdate(tagsWeight, tag, delta);
                 }
             }
 
             return tagsWeight;
+
+            void AddOrUpdate(Dictionary<string, float> dic, string tag, float value)
+            {
+                if (tagsWeight.ContainsKey(tag))
+                {
+                    tagsWeight[tag] += value;
+                }
+                else
+                {
+                    tagsWeight[tag] = value;
+                }
+            }
         }
 
         private IList<ID> GetIdsFromCookie(string cookieName)
         {
             var cookieValue = HttpContext.Current.Request.Cookies[cookieName]?.Value ?? string.Empty;
-            return cookieValue
-                .Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(idStr => ID.Parse(idStr, ID.Null))
-                .Where(id => !id.IsNull)
-                .ToList();
+            return cookieValue.Split('|').Select(idStr => ID.Parse(idStr, ID.Null)).Where(id => !id.IsNull).ToList();
         }
     }
 }
