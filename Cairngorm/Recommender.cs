@@ -9,7 +9,6 @@ using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.ContentSearch.Utilities;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.StringExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,47 +38,36 @@ namespace Cairngorm
             using (var context = index.CreateSearchContext())
             {
                 var query = context.GetQueryable<T>();
+
                 query = ApplyFilterQuery(query);
 
-                // Template filtering
                 if (!Setting.SearchTemplates.Any())
                 {
-                    var templatesPred = Setting.SearchTemplates.Aggregate(
-                        PredicateBuilder.False<T>(),
-                        (acc, id) => acc.Or(item => item.TemplateId == id));
+                    var templatesPred = Setting.SearchTemplates.Aggregate(PredicateBuilder.False<T>(), (acc, id) => acc.Or(item => item.TemplateId == id));
                     query = query.Filter(templatesPred);
                 }
 
-                // Stored items filtering
                 if (Setting.FilterStoredItems)
                 {
-                    // Dedupe IDs
                     var itemIds = new HashSet<ID>();
                     GetIdsFromCookie(Setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
 
                     query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
-
                 }
 
-                // Context item filtering
                 if (Setting.FilterContextItem)
                 {
                     query = query.Filter(item => item.ItemId != Context.Item.ID);
                 }
 
-                // Boosting predicate
-                var tagsWeight = GetTagsWeight(Setting);
+                var tagsWeight = GetTagsWeight();
                 var boosting = tagsWeight.Keys.Aggregate(
                     PredicateBuilder.Create<T>(item => item.Name.MatchWildcard("*").Boost(0.0f)),
                     (acc, tag) => acc.Or(item => item[Setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
 
-                return query
-                    .Where(boosting)
-                    .Take(count)
-                    .OrderByDescending(item => item["score"])
-                    .ToList() // remove
-                    .Select(doc => doc.GetItem())
-                    .ToList();
+                query = query.Where(boosting).OrderByDescending(item => item["score"]).Take(count);
+
+                return query.ToList().Select(doc => doc.GetItem()).ToList();
             }
         }
 
@@ -89,29 +77,20 @@ namespace Cairngorm
             .Filter(item => item.Paths.Contains(ItemIDs.ContentRoot))
             .Filter(item => item.Language == Context.Language.Name);
 
-        private IDictionary<string, float> GetTagsWeight(RecommenderSetting setting)
+        private IDictionary<string, float> GetTagsWeight()
         {
-            var tags = GetIdsFromCookie(setting.CookieInfo.Name)
-                .Select(Context.Database.GetItem)
-                .Where(item => item != null)
-                .SelectMany(item => TagsResolver.GetItemTags(item, setting))
-                .Where(tag => !tag.IsNullOrEmpty());
-
+            var items = GetIdsFromCookie(Setting.CookieInfo.Name).Select(Context.Database.GetItem).Where(item => item != null);
+            var tags = items.SelectMany(item => TagsResolver.GetItemTags(item, Setting)).Where(tag => !string.IsNullOrWhiteSpace(tag));
             var tagsWeight = new Dictionary<string, float>();
             foreach (var tag in tags)
             {
-                if (string.IsNullOrWhiteSpace(tag))
-                {
-                    continue;
-                }
-
                 if (tagsWeight.ContainsKey(tag))
                 {
-                    tagsWeight[tag] += 1.0f * setting.WeightPerMatching;
+                    tagsWeight[tag] += 1.0f * Setting.WeightPerMatching;
                 }
                 else
                 {
-                    tagsWeight[tag] = 1.0f * setting.WeightPerMatching;
+                    tagsWeight[tag] = 1.0f * Setting.WeightPerMatching;
                 }
             }
 
