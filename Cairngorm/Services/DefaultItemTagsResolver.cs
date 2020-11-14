@@ -20,7 +20,7 @@ namespace Cairngorm.Services
                 var fieldType = info.FieldType.ToLowerInvariant();
                 if (fieldType == "text")
                 {
-                    var values = item[info.FieldName].Split(new[] { info.Delimiter }, StringSplitOptions.RemoveEmptyEntries);
+                    var values = SplitByDelimiter(item[info.FieldName], info.Delimiter);
                     tags.AddRange(values);
 
                     continue;
@@ -29,11 +29,8 @@ namespace Cairngorm.Services
                 if (fieldType == "link")
                 {
                     var linkField = (LinkField)item.Fields[info.FieldName];
-                    var value = linkField?.TargetItem[info.TargetField];
-                    if (!string.IsNullOrWhiteSpace(value))
-                    {
-                        tags.Add(value);
-                    }
+                    var values = SplitByDelimiter(linkField?.TargetItem[info.TargetField], info.Delimiter);
+                    tags.AddRange(values);
 
                     continue;
                 }
@@ -41,7 +38,9 @@ namespace Cairngorm.Services
                 if (fieldType == "multilist")
                 {
                     var multilistField = (MultilistField)item.Fields[info.FieldName];
-                    var values = multilistField?.GetItems().Select(i=> i[info.TargetField]).Where(i => i != null);
+                    var values = multilistField?.GetItems()
+                        .SelectMany(i=> SplitByDelimiter(i[info.TargetField], info.Delimiter))
+                        .Where(i => i != null);
                     if (tags != null)
                     {
                         tags.AddRange(values);
@@ -52,6 +51,21 @@ namespace Cairngorm.Services
             }
 
             return tags;
+
+            string[] SplitByDelimiter(string str, char? delimiter)
+            {
+                if (string.IsNullOrWhiteSpace(str))
+                {
+                    return new string[0];
+                }
+
+                if (delimiter == null)
+                {
+                    return new[] { str };
+                }
+
+                return str.Split(new[] { delimiter.Value }, StringSplitOptions.RemoveEmptyEntries);
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Cairngorm.Configurations
 
             var fieldName = XmlUtil.GetAttribute("fieldName", node)?.ToLowerInvariant();
             var fieldType = XmlUtil.GetAttribute("fieldType", node)?.ToLowerInvariant();
-            var delimiter = XmlUtil.GetAttribute("targetField", node)?.ToLowerInvariant();
+            var delimiter = XmlUtil.GetAttribute("delimiter", node)?.ToLowerInvariant();
             var targetField = XmlUtil.GetAttribute("targetField", node)?.ToLowerInvariant();
 
             if (string.IsNullOrWhiteSpace(fieldName))
@@ -54,26 +54,11 @@ namespace Cairngorm.Configurations
                 throw new System.ArgumentException("The 'fieldType' attribute is required.", "fieldName");
             }
 
-            if (fieldType == "text" && string.IsNullOrWhiteSpace(delimiter))
-            {
-                throw new System.ArgumentException("The 'delimiter' attribute is required when the 'fieldType' is text.");
-            }
-
-            if (fieldType == "link" && string.IsNullOrWhiteSpace(targetField))
-            {
-                throw new System.ArgumentException("The 'targetField' attribute is required when the 'fieldType' is link.");
-            }
-
-            if (fieldType == "multilist" && string.IsNullOrWhiteSpace(targetField))
-            {
-                throw new System.ArgumentException("The 'targetField' attribute is required when the 'fieldType' is multilist.");
-            }
-
             var info = new TagResolverInfo()
             {
                 FieldName = fieldName,
                 FieldType = fieldType,
-                Delimiter = delimiter[0],
+                Delimiter = string.IsNullOrEmpty(delimiter) ? default(char?) : delimiter[0],
                 TargetField = targetField,
             };
 
