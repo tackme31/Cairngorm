@@ -94,7 +94,7 @@ namespace Cairngorm
             var tags = GetIdsFromCookie(setting.CookieInfo.Name)
                 .Select(Context.Database.GetItem)
                 .Where(item => item != null)
-                .SelectMany(TagsResolver.GetItemTags)
+                .SelectMany(item => TagsResolver.GetItemTags(item, setting))
                 .Where(tag => !tag.IsNullOrEmpty());
 
             var tagsWeight = new Dictionary<string, float>();
