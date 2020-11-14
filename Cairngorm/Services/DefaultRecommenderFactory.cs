@@ -22,7 +22,7 @@ namespace Cairngorm.Services
             var setting = GetRecommenderSetting(name);
             if (setting == null)
             {
-                throw new NotImplementedException($"The specific recommender does not exist. (Name: {name})");
+                throw new ArgumentException($"The specific recommender does not exist. (Name: {name})");
             }
 
             return new Recommender<T>(setting, ItemTagsResolver);
