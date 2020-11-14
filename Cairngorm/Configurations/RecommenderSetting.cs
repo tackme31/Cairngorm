@@ -1,4 +1,5 @@
-﻿using Sitecore.Data;
+﻿using Sitecore;
+using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Cairngorm.Configurations
         public float WeightPerMatching { get; set; } = 1.0f;
         public bool FilterStoredItems { get; set; } = false;
         public bool FilterContextItem { get; set; } = true;
+        public string SearchScope { get; set; } = string.Empty;
         public CookieInfo CookieInfo { get; set; } = new CookieInfo("cairngorm");
         public List<TagResolverInfo> TagResolverInfoList { get; }
 
