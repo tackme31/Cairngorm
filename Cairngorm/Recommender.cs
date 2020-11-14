@@ -73,9 +73,16 @@ namespace Cairngorm
 
         protected virtual ISearchIndex GetSearchIndex() => ContentSearchManager.GetIndex((SitecoreIndexableItem)Context.Item);
 
-        protected virtual IQueryable<T> ApplyFilterQuery(IQueryable<T> query) => query
-            .Filter(item => item.Paths.Contains(ItemIDs.ContentRoot))
-            .Filter(item => item.Language == Context.Language.Name);
+        protected virtual IQueryable<T> ApplyFilterQuery(IQueryable<T> query)
+        {
+            var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
+            if (!scope.IsNull)
+            {
+                query = query.Filter(item => item.Paths.Contains(scope));
+            }
+
+            return query.Filter(item => item.Language == Context.Language.Name);
+        }
 
         private IDictionary<string, float> GetTagsWeight()
         {
