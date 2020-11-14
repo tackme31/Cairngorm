@@ -37,34 +37,14 @@ namespace Cairngorm
             var index = GetSearchIndex();
             using (var context = index.CreateSearchContext())
             {
-                var query = context.GetQueryable<T>();
-
-                query = ApplyFilterQuery(query);
-
-                if (!Setting.SearchTemplates.Any())
-                {
-                    var templatesPred = Setting.SearchTemplates.Aggregate(PredicateBuilder.False<T>(), (acc, id) => acc.Or(item => item.TemplateId == id));
-                    query = query.Filter(templatesPred);
-                }
-
-                if (Setting.FilterStoredItems)
-                {
-                    var itemIds = new HashSet<ID>();
-                    GetIdsFromCookie(Setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
-
-                    query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
-                }
-
-                if (Setting.FilterContextItem)
-                {
-                    query = query.Filter(item => item.ItemId != Context.Item.ID);
-                }
-
                 var tagsWeight = GetTagsWeight();
                 var boosting = tagsWeight.Keys.Aggregate(
                     PredicateBuilder.Create<T>(item => item.Name.MatchWildcard("*").Boost(0.0f)),
                     (acc, tag) => acc.Or(item => item[Setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
 
+                var query = context.GetQueryable<T>();
+                query = ApplyItemsFilter(query);
+                query = ApplySettingFilter(query);
                 query = query.Where(boosting).OrderByDescending(item => item["score"]).Take(count);
 
                 return query.ToList().Select(doc => doc.GetItem()).ToList();
@@ -73,15 +53,39 @@ namespace Cairngorm
 
         protected virtual ISearchIndex GetSearchIndex() => ContentSearchManager.GetIndex((SitecoreIndexableItem)Context.Item);
 
-        protected virtual IQueryable<T> ApplyFilterQuery(IQueryable<T> query)
+        protected virtual IQueryable<T> ApplyItemsFilter(IQueryable<T> query) => query.Filter(item => item.Language == Context.Language.Name);
+
+        private IQueryable<T> ApplySettingFilter(IQueryable<T> query)
         {
-            var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
-            if (!scope.IsNull)
+            if (!Setting.SearchTemplates.Any())
             {
-                query = query.Filter(item => item.Paths.Contains(scope));
+                var templatesPred = Setting.SearchTemplates.Aggregate(PredicateBuilder.False<T>(), (acc, id) => acc.Or(item => item.TemplateId == id));
+                query = query.Filter(templatesPred);
             }
 
-            return query.Filter(item => item.Language == Context.Language.Name);
+            if (Setting.FilterStoredItems)
+            {
+                var itemIds = new HashSet<ID>();
+                GetIdsFromCookie(Setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
+
+                query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
+            }
+
+            if (Setting.FilterContextItem)
+            {
+                query = query.Filter(item => item.ItemId != Context.Item.ID);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Setting.SearchScope))
+            {
+                var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
+                if (!scope.IsNull)
+                {
+                    query = query.Filter(item => item.Paths.Contains(scope));
+                }
+            }
+
+            return query;
         }
 
         private IDictionary<string, float> GetTagsWeight()
