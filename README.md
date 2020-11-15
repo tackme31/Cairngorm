@@ -51,6 +51,8 @@
     ```
 
 ## Usage
+You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feature/Cairngorm/Cairngorm.config.example).
+
 ### Configuration
 WIP
 

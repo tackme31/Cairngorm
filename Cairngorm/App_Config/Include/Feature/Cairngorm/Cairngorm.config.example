@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:patch="http://www.sitecore.net/xmlconfig/" xmlns:role="http://www.sitecore.net/xmlconfig/role/">
+  <sitecore role:require="Standalone or ContentManagement or ContentDelivery">
+    <cairngorm>
+      <configuration type="Cairngorm.Configurations.RecommenderConfiguration, Cairngorm">
+        <recommenders hint="list:AddRecommender">
+          <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
+            <param desc="name">$(name)</param>
+            <!-- An index field name for search by tags. -->
+            <searchField>_content</searchField>
+            <!-- The template IDs to filter the recommendation items. -->
+            <searchTemplates hint="raw:AddSearchTemplate">
+              <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
+            </searchTemplates>
+            <!-- A length of items stored in the cookie. -->
+            <storedItemsCount>10</storedItemsCount>
+            <!-- A value to be added to boosting when a tag is matched. -->
+            <weightPerMatching>1.0</weightPerMatching>
+            <!-- When set true, the newer the item in the cookie, the more weight is given to it. -->
+            <boostGradually>false</boostGradually>
+            <!-- When set true, items stored in the cookie are filtered from recommendations. -->
+            <filterStoredItems>false</filterStoredItems>
+            <!-- When set true, a context item is filtered from recommendations. -->
+            <filterContextItem>true</filterContextItem>
+            <!-- A root item of the recommendation items (Path or ID).-->
+            <searchScope>/sitecore/content</searchScope>
+            <!-- Cookie's information. -->
+            <cookieInfo type="Cairngorm.Configurations.CookieInfo, Cairngorm">
+              <param desc="name">cairngorm_sample</param>
+              <lifespan>30</lifespan>
+              <domain></domain>
+              <path>/</path>
+              <secure>true</secure>
+              <httpOnly>true</httpOnly>
+            </cookieInfo>
+            <!-- The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers. -->
+            <tagResolvers hint="raw:AddTagResolver">
+              <!-- The tags are in the text field. If the "delimiter" specified, the field value is splited by it. -->
+              <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
+              <!-- The tags are in the item's field refered from the link field. If the "delimiter" specified, the field value is splited by it. -->
+              <resolver type="Cairngorm.TagResolvers.LinkFieldTagResolver, Cairngorm" fieldName="Source" targetField="Tags" delimiter="|" />
+              <!-- The tags are in the items' field refered from the multilist field. If the "delimiter" specified, the field value is splited by it. -->
+              <resolver type="Cairngorm.TagResolvers.MultilistFieldTagResolver, Cairngorm" fieldName="Related News" targetField="Tags" delimiter="|" />
+            </tagResolvers>
+          </recommender>
+        </recommenders>
+      </configuration>
+    </cairngorm>
+  </sitecore>
+</configuration>
