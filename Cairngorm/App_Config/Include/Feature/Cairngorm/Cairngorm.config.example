@@ -6,25 +6,66 @@
         <recommenders hint="list:AddRecommender">
           <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
             <param desc="name">$(name)</param>
-            <!-- An index field name for search by tags. -->
+            <!--
+                (Required) An index field name for search by tags.
+                Default: _content
+            -->
             <searchField>_content</searchField>
-            <!-- The template IDs to filter the recommendation items. -->
+            
+            <!--
+                The template IDs to filter the recommendation items.
+                Default: Empty (All templates)
+            -->
             <searchTemplates hint="raw:AddSearchTemplate">
               <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
             </searchTemplates>
-            <!-- A length of items stored in the cookie. -->
+            
+            <!--
+                A length of items stored in the cookie.
+                Default: 10
+            -->
             <storedItemsCount>10</storedItemsCount>
-            <!-- A value to be added to boosting when a tag is matched. -->
+            
+            <!--
+                A value to be added to boosting when a tag is matched.
+                Default: 1.0
+            -->
             <weightPerMatching>1.0</weightPerMatching>
-            <!-- When set true, the newer the item in the cookie, the more weight is given to it. -->
+            
+            <!--
+                When set true, the newer the item in the cookie, the more weight is given to it.
+                Default: false
+            -->
             <boostGradually>false</boostGradually>
-            <!-- When set true, items stored in the cookie are filtered from recommendations. -->
+            
+            <!--
+                When set true, items stored in the cookie are filtered from recommendations.
+                Default: false
+            -->
             <filterStoredItems>false</filterStoredItems>
-            <!-- When set true, a context item is filtered from recommendations. -->
+            
+            <!--
+                When set true, a context item is filtered from recommendations.
+                Default: true
+            -->
             <filterContextItem>true</filterContextItem>
-            <!-- A root item of the recommendation items (Path or ID).-->
+            
+            <!--
+                A root item of the recommendation items (Path or ID).
+                Default: No scope (Search from all items).
+            -->
             <searchScope>/sitecore/content</searchScope>
-            <!-- Cookie's information. -->
+            
+            <!--
+                Cookie's information.
+                Default:
+                    - Name: cairngorm
+                    - Lifespan: 30 days
+                    - Domain: empty
+                    - Path: /
+                    - Secure: true
+                    - HttpOnly: true
+            -->
             <cookieInfo type="Cairngorm.Configurations.CookieInfo, Cairngorm">
               <param desc="name">cairngorm_sample</param>
               <lifespan>30</lifespan>
@@ -33,12 +74,18 @@
               <secure>true</secure>
               <httpOnly>true</httpOnly>
             </cookieInfo>
-            <!-- The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers. -->
+            
+            <!--
+                (Required) The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers.
+                Default: Empty. Add at least one more resolver.
+            -->
             <tagResolvers hint="raw:AddTagResolver">
               <!-- The tags are in the text field. If the "delimiter" specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
+              
               <!-- The tags are in the item's field refered from the link field. If the "delimiter" specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.LinkFieldTagResolver, Cairngorm" fieldName="Source" targetField="Tags" delimiter="|" />
+              
               <!-- The tags are in the items' field refered from the multilist field. If the "delimiter" specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.MultilistFieldTagResolver, Cairngorm" fieldName="Related News" targetField="Tags" delimiter="|" />
             </tagResolvers>
