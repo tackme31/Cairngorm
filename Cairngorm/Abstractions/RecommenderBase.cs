@@ -5,6 +5,6 @@ namespace Cairngorm.Abstractions
 {
     public abstract class RecommenderBase
     {
-        public abstract List<Item> GetRecommedations(int count = 10);
+        public abstract List<Item> GetRecommedation(int count = 10);
     }
 }

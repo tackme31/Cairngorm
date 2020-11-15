@@ -27,7 +27,7 @@ namespace Cairngorm
             Setting = recommenderSetting;
         }
 
-        public override List<Item> GetRecommedations(int count = 10)
+        public override List<Item> GetRecommedation(int count = 10)
         {
             if (count <= 0)
             {
