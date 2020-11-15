@@ -1,7 +1,7 @@
 using Sitecore.Data.Items;
 using System.Collections.Generic;
 
-namespace Cairngorm.Abstractions
+namespace Cairngorm.Services
 {
     public abstract class Recommender
     {

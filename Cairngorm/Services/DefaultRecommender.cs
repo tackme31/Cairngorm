@@ -1,6 +1,4 @@
-using Cairngorm.Abstractions;
 using Cairngorm.Configurations;
-using Cairngorm.Services;
 using Sitecore;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq;
@@ -14,16 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Cairngorm
+namespace Cairngorm.Services
 {
-    public class CairngormRecommender<T> : Recommender where T : SearchResultItem
+    public class DefaultRecommender<T> : Recommender where T : SearchResultItem
     {
-        protected IItemTagsResolver TagsResolver { get; }
         protected RecommenderSetting Setting { get; }
 
-        public CairngormRecommender(RecommenderSetting recommenderSetting, IItemTagsResolver tagsResolver)
+        public DefaultRecommender(RecommenderSetting recommenderSetting)
         {
-            TagsResolver = tagsResolver;
             Setting = recommenderSetting;
         }
 
@@ -94,7 +90,7 @@ namespace Cairngorm
             var items = GetIdsFromCookie(Setting.CookieInfo.Name).Select(Context.Database.GetItem).Where(item => item != null);
             foreach (var (item, index) in items.Select((item, index) => (item, index + 1)))
             {
-                var tags = TagsResolver.GetItemTags(item, Setting).Where(tag => !string.IsNullOrWhiteSpace(tag));
+                var tags = Setting.TagResolvers.SelectMany(resolver => resolver.GetItemTags(item)).Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList();
                 foreach (var tag in tags)
                 {
                     var weight = Setting.BoostGradually ? Setting.WeightPerMatching / index : Setting.WeightPerMatching;

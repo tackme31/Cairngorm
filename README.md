@@ -18,10 +18,10 @@
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
-                <!-- Set where tags are in. In the following example, the tags are contained in "Tags" field, separated by '|'. -->
-                <tagFields hint="raw:AddTagsResolverInfo">
-                  <tagField fieldName="Tags" fieldType="text" delimiter="|" />
-                </tagFields>
+                <!-- Add tag resolvers. In the following example, the tags are contained in "Tags" field, separated by '|'. -->
+				<tagResolvers hint="raw:AddTagResolver">
+				  <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
+				</tagResolvers>
               </recommender>
             </recommenders>
           </configuration>
