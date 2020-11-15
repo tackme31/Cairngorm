@@ -16,12 +16,12 @@ using System.Web;
 
 namespace Cairngorm
 {
-    public class Recommender<T> : RecommenderBase where T : SearchResultItem
+    public class CairngormRecommender<T> : Recommender where T : SearchResultItem
     {
         protected IItemTagsResolver TagsResolver { get; }
         protected RecommenderSetting Setting { get; }
 
-        public Recommender(RecommenderSetting recommenderSetting, IItemTagsResolver tagsResolver)
+        public CairngormRecommender(RecommenderSetting recommenderSetting, IItemTagsResolver tagsResolver)
         {
             TagsResolver = tagsResolver;
             Setting = recommenderSetting;

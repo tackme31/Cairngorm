@@ -15,7 +15,7 @@ namespace Cairngorm.Services
             ItemTagsResolver = itemTagsResolver;
         }
 
-        public virtual RecommenderBase GetRecommender(string name)
+        public virtual Recommender GetRecommender(string name)
         {
             Assert.ArgumentNotNullOrEmpty(name, nameof(name));
 
@@ -25,7 +25,7 @@ namespace Cairngorm.Services
                 throw new ArgumentException($"The specific recommender does not exist. (Name: {name})");
             }
 
-            return new Recommender<T>(setting, ItemTagsResolver);
+            return new CairngormRecommender<T>(setting, ItemTagsResolver);
         }
 
         protected RecommenderSetting GetRecommenderSetting(string name)
