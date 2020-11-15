@@ -1,7 +1,7 @@
 # Cairngorm
-*Cairngorm* is an easy-to-use recommender library for Sitecore. This software intends to be an advanced ver. of [TagBasedRecommender](https://github.com/xirtardauq/TagBasedRecommender).
+*Cairngorm* is an easy-to-use recommender library for Sitecore. This software intends to be an advanced version of [TagBasedRecommender](https://github.com/xirtardauq/TagBasedRecommender).
 
-**Warning: This repo is under active development. The API is likely to change.**
+**Warning: This repo is under development. The API is likely to change.**
 
 ## Getting Started
 1. Apply the following configuration patch.
@@ -14,11 +14,11 @@
               <!-- Add the "sample" recommender. -->
               <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
                 <param desc="name">$(name)</param>
-                <!-- Add the page template that is returned from recommender. -->
+                <!-- Set the page template that is returned from the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
-                <!-- Set where are tags in. The following example, the tags are contained in "Tags" field, which is separated by '|'. -->
+                <!-- Set where tags are in. In the following example, the tags are contained in "Tags" field, separated by '|'. -->
                 <tagFields hint="raw:AddTagsResolverInfo">
                   <tagField fieldName="Tags" fieldType="text" delimiter="|" />
                 </tagFields>
@@ -29,7 +29,7 @@
       </sitecore>
     </configuration>
     ```
-1. Now you can use recommender like this:
+1. Now you can use the recommender like this:
     ```csharp
     public class SampleRecommendationRepository
     {
@@ -37,13 +37,13 @@
 
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {
-            // Get recommendation by name specified in the "name" attribute.
+            // Get the recommender by the name specified in the "name" attribute.
             SampleRecommender = factory.GetRecommender(name: "sample");
         }
 
         public IModel GetModel()
         {
-            // Get recommended items by recommender.
+            // Get the recommended items by the recommender.
             var recommendation = SampleRecommender.GetRecommendation(count: 5);
             return ...;
         }
