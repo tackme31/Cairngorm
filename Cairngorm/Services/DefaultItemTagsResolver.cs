@@ -41,7 +41,7 @@ namespace Cairngorm.Services
                     var values = multilistField?.GetItems()
                         .SelectMany(i=> SplitByDelimiter(i[info.TargetField], info.Delimiter))
                         .Where(i => i != null);
-                    if (tags != null)
+                    if (values != null)
                     {
                         tags.AddRange(values);
                     }
