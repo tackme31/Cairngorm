@@ -1,4 +1,3 @@
-using Cairngorm.Abstractions;
 using Cairngorm.Configurations;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Diagnostics;
@@ -8,11 +7,8 @@ namespace Cairngorm.Services
 {
     public class DefaultRecommenderFactory<T> : IRecommenderFactory where T : SearchResultItem
     {
-        protected IItemTagsResolver ItemTagsResolver { get; }
-
-        public DefaultRecommenderFactory(IItemTagsResolver itemTagsResolver)
+        public DefaultRecommenderFactory()
         {
-            ItemTagsResolver = itemTagsResolver;
         }
 
         public virtual Recommender GetRecommender(string name)
@@ -25,7 +21,7 @@ namespace Cairngorm.Services
                 throw new ArgumentException($"The specific recommender does not exist. (Name: {name})");
             }
 
-            return new CairngormRecommender<T>(setting, ItemTagsResolver);
+            return new DefaultRecommender<T>(setting);
         }
 
         protected RecommenderSetting GetRecommenderSetting(string name)

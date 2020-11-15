@@ -66,18 +66,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abstractions\Recommender.cs" />
-    <Compile Include="Configurations\TagsResolverInfo.cs" />
+    <Compile Include="Services\Recommender.cs" />
     <Compile Include="Pipelines\QueueItemForRecommendation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CairngormRecommender.cs" />
-    <Compile Include="Services\DefaultItemTagsResolver.cs" />
+    <Compile Include="Services\DefaultRecommender.cs" />
     <Compile Include="Services\DefaultRecommenderFactory.cs" />
     <Compile Include="Services\IRecommenderFactory.cs" />
-    <Compile Include="Services\IItemTagsResolver.cs" />
     <Compile Include="Configurations\CookieInfo.cs" />
     <Compile Include="Configurations\RecommenderConfiguration.cs" />
     <Compile Include="Configurations\RecommenderSetting.cs" />
+    <Compile Include="TagResolvers\MultilistFieldTagResolver.cs" />
+    <Compile Include="TagResolvers\LinkFieldTagResolver.cs" />
+    <Compile Include="TagResolvers\TextFieldTagResolver.cs" />
+    <Compile Include="TagResolvers\TagResolverBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\Feature\Cairngorm\Cairngorm.config" />

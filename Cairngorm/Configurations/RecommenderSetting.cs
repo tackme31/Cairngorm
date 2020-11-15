@@ -1,7 +1,8 @@
-﻿using Sitecore;
+﻿using Cairngorm.TagResolvers;
 using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
+using System;
 using System.Collections.Generic;
 using System.Xml;
 
@@ -14,7 +15,7 @@ namespace Cairngorm.Configurations
             Assert.ArgumentNotNullOrEmpty(name, nameof(name));
 
             Name = name;
-            TagsResolverInfoList = new List<TagsResolverInfo>();
+            TagResolvers = new List<TagResolverBase>();
         }
 
         public string Name { get; }
@@ -27,7 +28,7 @@ namespace Cairngorm.Configurations
         public bool FilterContextItem { get; set; } = true;
         public string SearchScope { get; set; } = string.Empty;
         public CookieInfo CookieInfo { get; set; } = new CookieInfo("cairngorm");
-        public List<TagsResolverInfo> TagsResolverInfoList { get; }
+        public List<TagResolverBase> TagResolvers { get; }
 
         public void AddSearchTemplate(XmlNode node)
         {
@@ -38,34 +39,15 @@ namespace Cairngorm.Configurations
             SearchTemplates.Add(templateId);
         }
 
-        public void AddTagsResolverInfo(XmlNode node)
+        public void AddTagResolver(XmlNode node)
         {
             Assert.ArgumentNotNull(node, nameof(node));
 
-            var fieldName = XmlUtil.GetAttribute("fieldName", node)?.ToLowerInvariant();
-            var fieldType = XmlUtil.GetAttribute("fieldType", node)?.ToLowerInvariant();
-            var delimiter = XmlUtil.GetAttribute("delimiter", node)?.ToLowerInvariant();
-            var targetField = XmlUtil.GetAttribute("targetField", node)?.ToLowerInvariant();
+            var typeName = XmlUtil.GetAttribute("type", node);
+            var type = Type.GetType(typeName);
+            var instance = (TagResolverBase)Activator.CreateInstance(type, node);
 
-            if (string.IsNullOrWhiteSpace(fieldName))
-            {
-                throw new System.ArgumentException("The 'fieldName' attribute is required.", "fieldName");
-            }
-
-            if (string.IsNullOrWhiteSpace(fieldType))
-            {
-                throw new System.ArgumentException("The 'fieldType' attribute is required.", "fieldName");
-            }
-
-            var info = new TagsResolverInfo()
-            {
-                FieldName = fieldName,
-                FieldType = fieldType,
-                Delimiter = string.IsNullOrEmpty(delimiter) ? default(char?) : delimiter[0],
-                TargetField = targetField,
-            };
-
-            TagsResolverInfoList.Add(info);
+            TagResolvers.Add(instance);
         }
     }
 }
