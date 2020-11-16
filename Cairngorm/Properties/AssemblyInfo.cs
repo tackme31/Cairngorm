@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("Cairngorm")]
-[assembly: AssemblyDescription("A simple recommendation library for Sitecore.")]
+[assembly: AssemblyDescription("An easy-to-use recommender library for Sitecore.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Takumi Yamada")]
 [assembly: AssemblyProduct("Cairngorm")]
