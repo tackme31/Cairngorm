@@ -1,14 +1,14 @@
 ﻿using Sitecore.Configuration;
 using Sitecore.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cairngorm.Configurations
 {
     public class RecommenderConfiguration
     {
         private readonly IDictionary<string, RecommenderSetting> _settings;
-        private readonly List<string> _settingNames;
-        public IReadOnlyCollection<string> SettingNames => _settingNames;
+        public IReadOnlyCollection<string> SettingNames => _settings.Keys.ToList();
 
         public static RecommenderConfiguration Create(bool assert = false)
         {
@@ -18,7 +18,6 @@ namespace Cairngorm.Configurations
         public RecommenderConfiguration()
         {
             _settings = new Dictionary<string, RecommenderSetting>();
-            _settingNames = new List<string>();
         }
 
         public void AddRecommender(RecommenderSetting recommender)
@@ -26,7 +25,6 @@ namespace Cairngorm.Configurations
             Assert.ArgumentNotNull(recommender, nameof(recommender));
 
             _settings[recommender.Name] = recommender;
-            _settingNames.Add(recommender.Name);
         }
 
         public RecommenderSetting GetSetting(string name)

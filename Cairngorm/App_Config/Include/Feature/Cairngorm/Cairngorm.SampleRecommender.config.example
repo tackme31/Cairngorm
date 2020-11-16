@@ -80,13 +80,13 @@
                 Default: Empty. Add at least one more resolver.
             -->
             <tagResolvers hint="raw:AddTagResolver">
-              <!-- The tags are in the text field. If the "delimiter" specified, the field value is splited by it. -->
+              <!-- The tags are in the text field. When a delimiter specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
               
-              <!-- The tags are in the item's field refered from the link field. If the "delimiter" specified, the field value is splited by it. -->
+              <!-- The tags are in the item's field refered from the link field. When a delimiter specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.LinkFieldTagResolver, Cairngorm" fieldName="Source" targetField="Tags" delimiter="|" />
               
-              <!-- The tags are in the items' field refered from the multilist field. If the "delimiter" specified, the field value is splited by it. -->
+              <!-- The tags are in the items' field refered from the multilist field. When a delimiter specified, the field value is splited by it. -->
               <resolver type="Cairngorm.TagResolvers.MultilistFieldTagResolver, Cairngorm" fieldName="Related News" targetField="Tags" delimiter="|" />
             </tagResolvers>
           </recommender>

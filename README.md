@@ -11,14 +11,13 @@
         <cairngorm>
           <configuration type="Cairngorm.Configurations.RecommenderConfiguration, Cairngorm">
             <recommenders hint="list:AddRecommender">
-              <!-- Add the "sample" recommender. -->
               <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
                 <param desc="name">$(name)</param>
                 <!-- Set the page templates that is returned from the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
-                <!-- Add the tag resolvers. In the following example, the tags are contained in "Tags" field, separated by '|'. -->
+                <!-- Add the tag resolvers. In the following example, tags are contained in the "Tags" field, separated by '|'. -->
                 <tagResolvers hint="raw:AddTagResolver">
                   <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
                 </tagResolvers>
@@ -43,7 +42,7 @@
 
         public IModel GetModel()
         {
-            // Get the recommended items by the recommender.
+            // Get recommended items by the recommender.
             var recommendation = SampleRecommender.GetRecommendation(count: 5);
             return ...;
         }
