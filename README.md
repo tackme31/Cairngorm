@@ -14,7 +14,7 @@
               <!-- Add the "sample" recommender. -->
               <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
                 <param desc="name">$(name)</param>
-                <!-- Set the page template that is returned from the recommender. -->
+                <!-- Set the page templates that is returned from the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
@@ -37,7 +37,7 @@
 
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {
-            // Get the recommender by the name specified in the "name" attribute.
+            // Get the recommender by the name specified in the configuration.
             SampleRecommender = factory.GetRecommender(name: "sample");
         }
 
@@ -51,7 +51,7 @@
     ```
 
 ## Usage
-You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feature/Cairngorm/Cairngorm.config.example).
+You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feature/Cairngorm/Cairngorm.SampleRecommender.config.example).
 
 ### Configuration
 WIP

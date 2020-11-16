@@ -39,13 +39,13 @@
             <boostGradually>false</boostGradually>
             
             <!--
-                When set true, items stored in the cookie are filtered from recommendations.
+                When set true, items stored in the cookie are filtered from recommendation.
                 Default: false
             -->
             <filterStoredItems>false</filterStoredItems>
             
             <!--
-                When set true, a context item is filtered from recommendations.
+                When set true, a context item is filtered from recommendation.
                 Default: true
             -->
             <filterContextItem>true</filterContextItem>
