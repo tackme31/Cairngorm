@@ -39,7 +39,7 @@
             <boostGradually>false</boostGradually>
             
             <!--
-                When set true, items stored in the cookie are filtered from recommendation.
+                When set true, the items stored in the cookie are filtered from recommendation.
                 Default: false
             -->
             <filterStoredItems>false</filterStoredItems>
@@ -57,7 +57,7 @@
             <searchScope>/sitecore/content</searchScope>
             
             <!--
-                Cookie's information.
+                Cookie's information used for recommendation.
                 Default:
                     - Name: cairngorm
                     - Lifespan: 30 days
