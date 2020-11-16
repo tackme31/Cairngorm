@@ -89,6 +89,10 @@ The tag resolver can be added by implementing a class derived from the `TagResol
 ```csharp
 public class MetadataKeywordsTagResolver : Cairngorm.TagResolvers.TagResolverBase
 {
+    public MetadataKeywordsTagResolver (XmlNode node) : base(node)
+    {
+    }
+
     public override List<string> GetItemTags(Item item)
     {
         // Get tags from the Keyword field in the {context item}/Data/Metadata item.
