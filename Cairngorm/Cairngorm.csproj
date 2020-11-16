@@ -81,8 +81,8 @@
     <Compile Include="TagResolvers\TagResolverBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Feature\Cairngorm\Cairngorm.SampleRecommender.config.example" />
-    <None Include="App_Config\Include\Feature\Cairngorm\Cairngorm.config" />
+    <Content Include="App_Config\Include\Feature\Cairngorm\Cairngorm.SampleRecommender.config.example" />
+    <Content Include="App_Config\Include\Feature\Cairngorm\Cairngorm.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
