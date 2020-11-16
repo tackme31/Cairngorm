@@ -53,7 +53,7 @@ namespace Cairngorm.Services
 
         private IQueryable<T> ApplySettingFilter(IQueryable<T> query)
         {
-            if (!Setting.SearchTemplates.Any())
+            if (Setting.SearchTemplates.Any())
             {
                 var templatesPred = Setting.SearchTemplates.Aggregate(PredicateBuilder.False<T>(), (acc, id) => acc.Or(item => item.TemplateId == id));
                 query = query.Filter(templatesPred);
