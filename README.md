@@ -72,7 +72,7 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |FilterContextItem|`bool`| When set true, a context item is filtered from recommendation.|`true`|
 |SearchScope|`string`|A root item of the recommendation items (Path or ID).|No scope.|
 |CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
-|TagResolvers|`List<TagResolverBase>`|The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers.|No filter.|
+|TagResolvers|`List<TagResolverBase>`|The tag resolvers which resolve the tags from a context item. See the Tag Resolver section for more information.|No filter.|
 
 The `CookieInfo` property has the following properties.
 
