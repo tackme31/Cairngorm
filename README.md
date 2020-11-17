@@ -18,7 +18,7 @@ This library is tested on Sitecore XP 9.3 initial release.
           <configuration type="Cairngorm.Configurations.RecommenderConfiguration, Cairngorm">
             <recommenders hint="list:AddRecommender">
               <recommender name="sample" type="Cairngorm.Configurations.RecommenderSetting, Cairngorm">
-                <!-- Specifie recommender name. -->
+                <!-- Specify recommender name. -->
                 <param desc="name">$(name)</param>
 
                 <!-- Set the page templates that is returned from the recommender. -->
@@ -71,8 +71,19 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |FilterStoredItems|`bool`|When set true, the items stored in the cookie are filtered from recommendation.|`false`|
 |FilterContextItem|`bool`| When set true, a context item is filtered from recommendation.|`true`|
 |SearchScope|`string`|A root item of the recommendation items (Path or ID).|No scope.|
-|CookieInfo|`CookieInfo`|Cookie's information used for recommendation.||
+|CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
 |TagResolvers|`List<TagResolverBase>`|The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers.|No filter.|
+
+The `CookieInfo` property has the following properties.
+
+|Property Name|Type|Description|Default Value|
+|:-|:-|:-|:-|
+|Name|`string`|Cookie's name (required).|`"cairngorm"`|
+|Lifespan|`int`|Cookie's lifespan to set to Expire attribute (in days).|`30`|
+|Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
+|Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
+|Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
+|HttpOnly|`bool`|A value of the cookie's `HtpOnly` attribute.|`true`|
 
 ### For Customization
 #### Tag Resolver
@@ -95,7 +106,7 @@ public class MetadataKeywordsTagResolver : Cairngorm.TagResolvers.TagResolverBas
 
     public override List<string> GetItemTags(Item item)
     {
-        // Get tags from the Keyword field in the {context item}/Data/Metadata item.
+        // Get tags from the Keyword field in the {item' path}/Data/Metadata item.
         var metadata = item.Children["Data"].Children["Metadata"];
         return metadata["Keywords"].Split(' ').ToList();
     }
