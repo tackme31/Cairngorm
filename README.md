@@ -7,7 +7,7 @@
 Download .nupkg file from [here](https://github.com/xirtardauq/Cairngorm/releases), and install it from a local package source.
 
 ## Supports
-This library is tested on Sitecore XP 9.3 initial release.
+This library is tested on Sitecore XP 9.3 initial release with Solr.
 
 ## Usage
 1. Apply the following configuration patch.
@@ -21,12 +21,12 @@ This library is tested on Sitecore XP 9.3 initial release.
                 <!-- Specify recommender name. -->
                 <param desc="name">$(name)</param>
 
-                <!-- Set the page templates that is returned from the recommender. -->
+                <!-- Set item templates that are returned from the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
 
-                <!-- Add the tag resolvers. In the following example, tags are contained in the "Tags" field, separated by '|'. -->
+                <!-- Add tag resolvers. In the following example, tags are contained in the "Tags" field, separated by '|'. -->
                 <tagResolvers hint="raw:AddTagResolver">
                   <resolver type="Cairngorm.TagResolvers.TextFieldTagResolver, Cairngorm" fieldName="Tags" delimiter="|" />
                 </tagResolvers>
@@ -64,15 +64,15 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
 |SearchField|`string`|An index field name for search by tags.|`"_content"`|
-|SearchTemplates|`List<ID>`|The template IDs to filter the recommendation items.|Empty (All templates).|
+|SearchTemplates|`List<ID>`|Template IDs to be the target of the recommender.|Empty (All templates).|
 |StoredItemsCount|`int`|A length of items stored in the cookie.|`10`|
 |WeightPerMatching|`float`|A value to be added to boosting when a tag is matched.|`1.0`|
-|BoostGradually|`bool`|set true, the newer the item in the cookie, the more weight is given to it.|`false`|
-|FilterStoredItems|`bool`|When set true, the items stored in the cookie are filtered from recommendation.|`false`|
-|FilterContextItem|`bool`| When set true, a context item is filtered from recommendation.|`true`|
-|SearchScope|`string`|A root item of the recommendation items (Path or ID).|No scope.|
+|BoostGradually|`bool`|If enabled, the newer the item in the cookie, the more weight is given to it.|`false`|
+|FilterStoredItems|`bool`|If enabled, items stored in the cookie are filtered from results.|`false`|
+|FilterContextItem|`bool`|If enabled, a context item is filtered from results.|`true`|
+|SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
 |CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
-|TagResolvers|`List<TagResolverBase>`|The tag resolvers which resolve the tags from a context item. See the Tag Resolver section for more information.|No filter.|
+|TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from a context item. See the Tag Resolver section for more information.|No filter.|
 
 The `CookieInfo` property has the following properties.
 
@@ -83,17 +83,16 @@ The `CookieInfo` property has the following properties.
 |Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
 |Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
 |Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
-|HttpOnly|`bool`|A value of the cookie's `HtpOnly` attribute.|`true`|
+|HttpOnly|`bool`|A value of the cookie's `HttpOnly` attribute.|`true`|
 
-### For Customization
-#### Tag Resolver
+### Tag Resolver
 There are three pre-defined resolvers:
 
 |Name|Description|
 |:-|:-|
-|`TextFieldTagResolver`|The tags are in the text field. When a delimiter specified, the field value is splited by it.|
-|`LinkFieldTagResolver`|The tags are in the item's field refered from the link field. When a delimiter specified, the field value is splited by it.|
-|`MultilistFieldTagResolver`|The tags are in the items' field refered from the multilist field. When a delimiter specified, the field value is splited by it.|
+|`TextFieldTagResolver`|Tags are in the text field. When a delimiter is specified, the field value is split by it.|
+|`LinkFieldTagResolver`|Tags are in the item's field referred from the link field. When a delimiter is specified, the field value is split by it.|
+|`MultilistFieldTagResolver`|Tags are in the items' field referred from the multilist field. When a delimiter is specified, the field value is split by it.|
 
 The tag resolver can be added by implementing a class derived from the `TagResolverBase` class.
 
@@ -106,7 +105,7 @@ public class MetadataKeywordsTagResolver : Cairngorm.TagResolvers.TagResolverBas
 
     public override List<string> GetItemTags(Item item)
     {
-        // Get tags from the Keyword field in the {item' path}/Data/Metadata item.
+        // Get tags from the Keyword field in the {item's path}/Data/Metadata item.
         var metadata = item.Children["Data"].Children["Metadata"];
         return metadata["Keywords"].Split(' ').ToList();
     }
@@ -121,8 +120,8 @@ And set the resolver to configuration's `TagResolvers` section.
 </tagResolvers>
 ```
 
-#### Search Filter
-By default, the recommended items are filtered by the context language. If you add or change the filter condition, override the `DefaultRecommender.ApplyItemsFilter` method.
+### Search Filter
+The recommender filters items that have non-context languages from results. If you want to add or change filters, override the `DefaultRecommender.ApplyItemsFilter` method.
 
 ```csharp
 public class MySearchResultItem : SearchResultItem
@@ -136,7 +135,7 @@ public class MyRecommender : Cairngorm.Services.DefaultRecommender<MySearchResul
     {
     }
 
-    // Apply the additional filters.
+    // Apply additional filters.
     protected override IQueryable<MySearchResultItem> ApplyItemsFilter(IQueryable<MySearchResultItem> query) => base.ApplyItemsFilter(query)
         .Filter(item => item.MyProperty == "My Filter")
         .Filter(item => item.TemplateName == "My Template");
