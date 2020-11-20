@@ -24,13 +24,19 @@ namespace Cairngorm.TagResolvers
 
         public override List<string> GetItemTags(Item item)
         {
-            var linkField = (LinkField)item.Fields[FieldName];
-            if (linkField?.TargetItem == null)
+            var field = item.Fields[FieldName];
+            if (field == null)
             {
                 return new List<string>();
             }
 
-            var value = linkField.TargetItem[TargetField];
+            var targetItem = ((LinkField)field).TargetItem ?? ((ReferenceField)field).TargetItem;
+            if (targetItem == null)
+            {
+                return new List<string>();
+            }
+
+            var value = targetItem[TargetField];
             if (!Delimiter.HasValue)
             {
                 return new List<string> { value };
