@@ -10,6 +10,8 @@ Download .nupkg file from [here](https://github.com/xirtardauq/Cairngorm/release
 This library is tested on Sitecore XP 9.3 initial release with Solr.
 
 ## Usage
+The recommender searches recommended items based on "Tag", resolved from an item. The more "Tag"s an item contains, the more likely the item is recommended.
+
 1. Apply the following configuration patch.
     ```xml
     <configuration>
@@ -21,7 +23,7 @@ This library is tested on Sitecore XP 9.3 initial release with Solr.
                 <!-- Specify recommender name. -->
                 <param desc="name">$(name)</param>
 
-                <!-- Set item templates that are returned from the recommender. -->
+                <!-- Add template IDs to be the target of the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
@@ -72,7 +74,7 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |FilterContextItem|`bool`|If enabled, a context item is filtered from results.|`true`|
 |SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
 |CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
-|TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from a context item. See the Tag Resolver section for more information.|No filter.|
+|TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from an item in the cookie. See the Tag Resolver section for more information.|No resolver.|
 
 The `CookieInfo` property has the following properties.
 
