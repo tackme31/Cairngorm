@@ -82,7 +82,7 @@ The `CookieInfo` property has the following properties.
 
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
-|Name|`string`|Cookie's name (required).|`"cairngorm"`|
+|Name|`string`|Cookie's name (required).|`"recommend_items"`|
 |Lifespan|`int`|Cookie's lifespan to set to Expire attribute (in days).|`30`|
 |Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
 |Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
