@@ -81,11 +81,11 @@ The `CookieInfo` property has the following properties.
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
 |Name|`string`|Cookie's name (required).|`"cairngorm"`|
-|Lifespan|`int`|Cookie's lifespan to set to Expire attribute (in days).|`30`|
-|Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
-|Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
-|Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
-|HttpOnly|`bool`|A value of the cookie's `HttpOnly` attribute.|`true`|
+|MaxAge|`int`|A value of the cookie's `max-age` attribute.|`2592000` (30 days)|
+|Domain|`string`|A value of the cookie's `domain` attribute.|Empty.|
+|Path|`string`|A value of the cookie's `path` attribute.|`"/"`|
+|Secure|`bool`|A value of the cookie's `secure` attribute.|`true`|
+|HttpOnly|`bool`|A value of the cookie's `httponly` attribute.|`true`|
 
 ### Tag Resolver
 There are three pre-defined resolvers:
