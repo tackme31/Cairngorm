@@ -59,7 +59,7 @@
             <!--
                 Cookie's information used for recommendation.
                 Default:
-                    - Name: cairngorm
+                    - Name: recommend_items
                     - MaxAge: 2,592,000 sec. (30 days)
                     - Domain: empty
                     - Path: /
@@ -67,7 +67,7 @@
                     - HttpOnly: true
             -->
             <cookieInfo type="Cairngorm.Configurations.CookieInfo, Cairngorm">
-              <param desc="name">cairngorm_sample</param>
+              <param desc="name">recommend_sample</param>
               <maxAge>2592000</maxAge>
               <domain></domain>
               <path>/</path>

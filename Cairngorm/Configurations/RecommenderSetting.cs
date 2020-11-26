@@ -27,7 +27,7 @@ namespace Cairngorm.Configurations
         public bool FilterStoredItems { get; set; } = false;
         public bool FilterContextItem { get; set; } = true;
         public string SearchScope { get; set; } = string.Empty;
-        public CookieInfo CookieInfo { get; set; } = new CookieInfo("cairngorm");
+        public CookieInfo CookieInfo { get; set; } = new CookieInfo("recommend_items");
         public List<TagResolverBase> TagResolvers { get; }
 
         public void AddSearchTemplate(XmlNode node)

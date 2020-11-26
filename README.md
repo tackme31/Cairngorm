@@ -1,5 +1,9 @@
+English | [日本語](README.ja.md)
+
+<img src="img/logo-title.svg" height="120px" style="margin-left: 20px;">
+
 # Cairngorm
-*Cairngorm* is an easy-to-use recommender library for Sitecore. This software intends to be an advanced version of [TagBasedRecommender](https://github.com/xirtardauq/TagBasedRecommender).
+*Cairngorm* is an easy-to-use recommender library for Sitecore.
 
 **Warning: This repo is under development. The API is likely to change.**
 
@@ -80,12 +84,12 @@ The `CookieInfo` property has the following properties.
 
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
-|Name|`string`|Cookie's name (required).|`"cairngorm"`|
-|MaxAge|`int`|A value of the cookie's `max-age` attribute.|`2592000` (30 days)|
-|Domain|`string`|A value of the cookie's `domain` attribute.|Empty.|
-|Path|`string`|A value of the cookie's `path` attribute.|`"/"`|
-|Secure|`bool`|A value of the cookie's `secure` attribute.|`true`|
-|HttpOnly|`bool`|A value of the cookie's `httponly` attribute.|`true`|
+|Name|`string`|Cookie's name (required).|`"recommend_items"`|
+|MaxAge|`int`|A value of the cookie's `Max-Age` attribute.|`2592000` (30 days)|
+|Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
+|Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
+|Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
+|HttpOnly|`bool`|A value of the cookie's `HttpOnly` attribute.|`true`|
 
 ### Tag Resolver
 There are three pre-defined resolvers:
