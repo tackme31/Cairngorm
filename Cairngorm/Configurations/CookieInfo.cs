@@ -31,8 +31,6 @@ namespace Cairngorm.Configurations
                 HttpOnly = HttpOnly,
             };
 
-            cookie.Values.Add("max-age", MaxAge.ToString());
-
             return cookie;
         }
     }
