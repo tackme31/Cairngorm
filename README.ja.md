@@ -85,7 +85,7 @@
 
 |プロパティ名|型|説明|デフォルト値|
 |:-|:-|:-|:-|
-|Name|`string`|クッキー名 (必須)|`"cairngorm"`|
+|Name|`string`|クッキー名 (必須)|`"recommend_items"`|
 |MaxAge|`int`|クッキーの`Expires`属性の設定に使用される有効期限 (秒)|`2592000` (30日)|
 |Domain|`string`|クッキーの`Domain`属性の値|未指定|
 |Path|`string`|クッキーのの`Path`属性の値|`"/"`|
