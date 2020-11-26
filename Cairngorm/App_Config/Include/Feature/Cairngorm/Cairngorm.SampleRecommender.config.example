@@ -60,7 +60,7 @@
                 Cookie's information used for recommendation.
                 Default:
                     - Name: recommend_items
-                    - Lifespan: 30 days
+                    - MaxAge: 2,592,000 sec. (30 days)
                     - Domain: empty
                     - Path: /
                     - Secure: true
@@ -68,7 +68,7 @@
             -->
             <cookieInfo type="Cairngorm.Configurations.CookieInfo, Cairngorm">
               <param desc="name">recommend_sample</param>
-              <lifespan>30</lifespan>
+              <maxAge>2592000</maxAge>
               <domain></domain>
               <path>/</path>
               <secure>true</secure>

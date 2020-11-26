@@ -14,7 +14,7 @@ namespace Cairngorm.Configurations
         }
 
         public string Name { get; }
-        public int Lifespan { get; set; } = 30;
+        public int MaxAge { get; set; } = 30 * 24 * 60 * 60;
         public string Domain { get; set; } = string.Empty;
         public string Path { get; set; } = "/";
         public bool Secure { get; set; } = true;
@@ -22,14 +22,18 @@ namespace Cairngorm.Configurations
 
         public HttpCookie ToHttpCookie()
         {
-            return new HttpCookie(Name)
+            var cookie = new HttpCookie(Name)
             {
-                Expires = DateTime.Now.AddDays(Lifespan),
+                Expires = DateTime.Now.AddSeconds(MaxAge),
                 Domain = Domain,
                 Path = Path,
                 Secure = Secure,
                 HttpOnly = HttpOnly,
             };
+
+            cookie.Values.Add("max-age", MaxAge.ToString());
+
+            return cookie;
         }
     }
 }

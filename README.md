@@ -85,7 +85,7 @@ The `CookieInfo` property has the following properties.
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
 |Name|`string`|Cookie's name (required).|`"recommend_items"`|
-|Lifespan|`int`|Cookie's lifespan to set to Expire attribute (in days).|`30`|
+|MaxAge|`int`|A value of the cookie's `Max-Age` attribute.|`2592000` (30 days)|
 |Domain|`string`|A value of the cookie's `Domain` attribute.|Empty.|
 |Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
 |Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
