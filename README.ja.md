@@ -1,5 +1,7 @@
 [English](README.md) | 日本語
 
+<img src="img/logo-title.svg" height="120px" style="margin-left: 20px;">
+
 # Cairngorm
 *Cairngorm* は簡単に使用できるSitecore用のレコメンドライブラリです。
 

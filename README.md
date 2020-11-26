@@ -1,5 +1,7 @@
 English | [日本語](README.ja.md)
 
+<img src="img/logo-title.svg" height="120px" style="margin-left: 20px;">
+
 # Cairngorm
 *Cairngorm* is an easy-to-use recommender library for Sitecore.
 
