@@ -1,5 +1,7 @@
+English | [日本語](README.ja.md)
+
 # Cairngorm
-*Cairngorm* is an easy-to-use recommender library for Sitecore. This software intends to be an advanced version of [TagBasedRecommender](https://github.com/xirtardauq/TagBasedRecommender).
+*Cairngorm* is an easy-to-use recommender library for Sitecore.
 
 **Warning: This repo is under development. The API is likely to change.**
 
