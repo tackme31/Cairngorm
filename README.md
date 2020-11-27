@@ -52,7 +52,7 @@ The recommender searches recommended items based on "Tag", resolved from an item
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {
             // Get the recommender by the name specified in the configuration.
-            SampleRecommender = factory.GetRecommender(name: "sample");
+            SampleRecommender = factory.GetRecommender(recommenderName: "sample");
         }
 
         public IModel GetModel()
@@ -153,9 +153,9 @@ Then fix the recommender factory to return the custom recommender.
 ```csharp
 public class MyRecommenderFactory : Cairngorm.Services.DefaultRecommenderFactory<MySearchResultItem>
 {
-    public override Recommender GetRecommender(string name)
+    public override Recommender GetRecommender(string recommenderName)
     {
-        var setting = GetRecommenderSetting(name);
+        var setting = GetRecommenderSetting(recommenderName);
         return new MyRecommender(setting);
     }
 }

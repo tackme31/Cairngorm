@@ -52,7 +52,7 @@
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {
             // レコメンダーを取得
-            SampleRecommender = factory.GetRecommender(name: "sample");
+            SampleRecommender = factory.GetRecommender(recommenderName: "sample");
         }
 
         public IModel GetModel()
@@ -155,9 +155,9 @@ public class MyRecommender : Cairngorm.Services.DefaultRecommender<MySearchResul
 ```csharp
 public class MyRecommenderFactory : Cairngorm.Services.DefaultRecommenderFactory<MySearchResultItem>
 {
-    public override Recommender GetRecommender(string name)
+    public override Recommender GetRecommender(string recommenderName)
     {
-        var setting = GetRecommenderSetting(name);
+        var setting = GetRecommenderSetting(recommenderName);
         return new MyRecommender(setting);
     }
 }
