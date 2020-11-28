@@ -11,16 +11,16 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="68.002426mm"
-   height="68.017609mm"
-   viewBox="0 0 68.002427 68.017609"
+   width="64.002426mm"
+   height="64.017609mm"
+   viewBox="0 0 64.002427 64.017609"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
    sodipodi:docname="logo-fill.svg"
-   inkscape:export-filename="D:\Windows\Downloads\logo-fill.png"
-   inkscape:export-xdpi="47.810062"
-   inkscape:export-ydpi="47.810062">
+   inkscape:export-filename="D:\Windows\Programs\sitecore\Cairngorm\img\icon.png"
+   inkscape:export-xdpi="50.798073"
+   inkscape:export-ydpi="50.798073">
   <defs
      id="defs2">
     <linearGradient
@@ -61,8 +61,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="44.046383"
-     inkscape:cy="137.67295"
+     inkscape:cx="2.9158993"
+     inkscape:cy="117.97105"
      inkscape:document-units="mm"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -71,10 +71,10 @@
      inkscape:window-x="1912"
      inkscape:window-y="535"
      inkscape:window-maximized="1"
-     fit-margin-left="11.2"
-     fit-margin-top="2"
-     fit-margin-right="11.2"
-     fit-margin-bottom="2" />
+     fit-margin-left="9.2"
+     fit-margin-top="0"
+     fit-margin-right="9.2"
+     fit-margin-bottom="0" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -83,7 +83,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -92,7 +92,7 @@
      id="layer2"
      inkscape:label="レイヤー 2"
      style="display:none"
-     transform="translate(-14.122785,-137.55479)">
+     transform="translate(-16.122785,-139.55479)">
     <flowRoot
        xml:space="preserve"
        id="flowRoot7625"
@@ -161,7 +161,7 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="レイヤー 3"
-     transform="translate(2.2279151,3.1590267)">
+     transform="translate(0.2279151,1.1590267)">
     <path
        style="fill:#fffff9;fill-opacity:1;stroke:#ffffff;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 31.797246,0.99218997 10.677827,22.725818 l 11.4792,35.387191 9.687466,3.166379 9.571363,-3.17378 11.453563,-35.474284 z"
@@ -173,7 +173,7 @@
      inkscape:groupmode="layer"
      id="layer1"
      style="display:inline"
-     transform="translate(-14.122785,-137.55479)">
+     transform="translate(-16.122785,-139.55479)">
     <path
        style="opacity:1;fill:#e3e3ed;fill-opacity:1;stroke:none;stroke-width:1.93889689;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0"
        clip-path="none"
