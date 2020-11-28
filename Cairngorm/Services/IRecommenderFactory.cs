@@ -2,6 +2,6 @@ namespace Cairngorm.Services
 {
     public interface IRecommenderFactory
     {
-        Recommender GetRecommender(string recommenderName);
+        Recommender GetRecommender(string name);
     }
 }
