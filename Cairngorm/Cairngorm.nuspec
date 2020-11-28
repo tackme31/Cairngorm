@@ -5,12 +5,17 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <iconUrl>https://raw.githubusercontent.com/xirtardauq/Cairngorm/main/img/icon.png</iconUrl>
+    <icon>images\icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/xirtardauq/Kotoha/</projectUrl>
+    <projectUrl>https://github.com/xirtardauq/Cairngorm</projectUrl>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright @2020 $author$</copyright>
-    <tags>sitecore recommendation</tags>
+    <tags>sitecore recommender</tags>
   </metadata>
+  <files>
+    <file src="..\img\icon.png" target="images\" />
+  </files>
 </package>
