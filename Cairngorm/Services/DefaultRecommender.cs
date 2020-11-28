@@ -18,9 +18,9 @@ namespace Cairngorm.Services
     {
         protected RecommenderSetting Setting { get; }
 
-        public DefaultRecommender(RecommenderSetting recommenderSetting)
+        public DefaultRecommender(RecommenderSetting setting)
         {
-            Setting = recommenderSetting;
+            Setting = setting;
         }
 
         public override List<Item> GetRecommedation(int count = 10)
