@@ -5,13 +5,14 @@
 # Cairngorm
 *Cairngorm* は簡単に使用できるSitecore用のレコメンドライブラリです。
 
-**注意: このライブラリは開発中なので今後APIが変わる可能性があります。**
+**注意: このライブラリは開発中のため、今後APIが変わる可能性があります。**
 
 ## インストール方法
-[こちら](https://github.com/xirtardauq/Cairngorm/releases)から.nupkgファイルをダウンロードし、ローカルのパッケージソースに配置してインストールしてください。
+NuGetで本パッケージをインストールしてください。
 
-## サポート情報
-このライブラリはSitecore XP 9.3.0でテストしています。検索プロバイダーはSolrを使用することを想定しています。
+```powershell
+PM> Install-Package Cairngorm
+```
 
 ## 使用方法
 このライブラリでは、アイテムから取得した「タグ」を元にレコメンドを作成しています。「タグ」が多く含まれているアイテムほど、レコメンドの上位に出現するようになります。
@@ -177,6 +178,9 @@ public class MyRecommenderFactory : Cairngorm.Services.DefaultRecommenderFactory
   </sitecore>
 </configuration>
 ```
+
+## サポート情報
+このライブラリはSitecore 9.3とSolrでのみテストしています。Sitecore 9.xでも動作するはずですが、動作しない場合はご連絡ください。
 
 ## 作者
 - 山田 拓実 (xirtardauq@gmail.com)

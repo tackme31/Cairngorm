@@ -8,10 +8,11 @@ English | [日本語](README.ja.md)
 **Warning: This repo is under development. The API is likely to change.**
 
 ## Installation
-Download .nupkg file from [here](https://github.com/xirtardauq/Cairngorm/releases), and install it from a local package source.
+You can install the package via NuGet.
 
-## Supports
-This library is tested on Sitecore XP 9.3 initial release with Solr.
+```powershell
+PM> Install-Package Cairngorm
+```
 
 ## Usage
 The recommender searches recommended items based on "Tag", resolved from an item. The more "Tag"s an item contains, the more likely the item is recommended.
@@ -175,6 +176,9 @@ Finally, replace the factory to the default one.
   </sitecore>
 </configuration>
 ```
+
+## Compatibility
+This library is only tested on Sitecore 9.3 with Solr. It should also work on Sitecore 9.x, but if it doesn't please let me know.
 
 ## Author
 - Takumi Yamada (xirtardauq@gmail.com)
