@@ -3,7 +3,12 @@ English | [日本語](README.ja.md)
 <img src="img/logo-title.svg" height="120px" style="margin-left: 20px;">
 
 # Cairngorm
-*Cairngorm* is an easy-to-use recommender library for Sitecore.
+*Cairngorm* is an easy-to-use recommender library for Sitecore. This library has the following features:
+
+- The simple API.
+- Work with a small configuration.
+- No machine learning needed.
+- Customizable.
 
 **Warning: This repo is under development. The API is likely to change.**
 
@@ -17,6 +22,7 @@ PM> Install-Package Cairngorm
 ## Usage
 The recommender searches recommended items based on "Tag", resolved from an item. The more "Tag"s an item contains, the more likely the item is recommended.
 
+1. Install the *Cairngorm* package to your project.
 1. Apply the following configuration patch.
     ```xml
     <configuration>
@@ -44,6 +50,7 @@ The recommender searches recommended items based on "Tag", resolved from an item
       </sitecore>
     </configuration>
     ```
+1. Deploy the project with the configurations.
 1. Now you can use the recommender like this:
     ```csharp
     public class SampleRecommendationRepository

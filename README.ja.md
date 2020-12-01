@@ -3,7 +3,13 @@
 <img src="img/logo-title.svg" height="120px" style="margin-left: 20px;">
 
 # Cairngorm
-*Cairngorm* は簡単に使用できるSitecore用のレコメンドライブラリです。
+*Cairngorm* は簡単に使用できるSitecore用のレコメンドライブラリです。このライブラリは以下のような特徴があります。
+
+- シンプルなAPI
+- 少ない設定で動作する
+- 機械学習が不要
+- カスタマイズ可能
+
 
 **注意: このライブラリは開発中のため、今後APIが変わる可能性があります。**
 
@@ -17,6 +23,7 @@ PM> Install-Package Cairngorm
 ## 使用方法
 このライブラリでは、アイテムから取得した「タグ」を元にレコメンドを作成しています。「タグ」が多く含まれているアイテムほど、レコメンドの上位に出現するようになります。
 
+1. *Cairngorm*のパッケージをプロジェクトにインストールします。
 1. 以下のパッチファイルをApp_Config以下に配置します。
     ```xml
     <configuration>
@@ -44,6 +51,7 @@ PM> Install-Package Cairngorm
       </sitecore>
     </configuration>
     ```
+1. プロジェクトをデプロイします。
 1. これで以下のようにレコメンドを取得できるようになります。
     ```csharp
     public class SampleRecommendationRepository
