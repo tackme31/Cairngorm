@@ -87,7 +87,7 @@ PM> Install-Package Cairngorm
 |FilterContextItem|`bool`|有効化すると、`Context.Item`がレコメンドの対象から除外されます。|`true`|
 |SearchScope|`string`|設定したアイテム以下からレコメンドを取得するようになります。|未指定（全アイテムが対象）|
 |CookieInfo|`CookieInfo`|クッキーに関する情報です。詳しくは以下の表を参照してください。|テーブル参照|
-|TagResolvers|`List<TagResolverBase>`|アイテムから「タグ」を取得するタグリゾルバーの一覧です。詳しくは「タグリゾルバー」サクションを参照してください。|未指定|
+|TagResolvers|`List<TagResolverBase>`|アイテムから「タグ」を取得するタグリゾルバーの一覧です。詳しくは「タグリゾルバー」セクションを参照してください。|未指定|
 
 
 `CookieInfo`プロパティは以下のプロパティを設定可能です。
