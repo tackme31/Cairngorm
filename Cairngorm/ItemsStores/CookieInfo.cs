@@ -2,7 +2,7 @@
 using System;
 using System.Web;
 
-namespace Cairngorm.Configurations
+namespace Cairngorm.ItemsStores
 {
     public class CookieInfo
     {

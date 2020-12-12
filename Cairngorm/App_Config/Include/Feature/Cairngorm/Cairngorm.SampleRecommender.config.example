@@ -21,12 +21,6 @@
             </searchTemplates>
             
             <!--
-                A length of items stored in the cookie.
-                Default: 10
-            -->
-            <storedItemsCount>10</storedItemsCount>
-            
-            <!--
                 A value to be added to boosting when a tag is matched.
                 Default: 1.0
             -->
@@ -56,7 +50,14 @@
             -->
             <searchScope>/sitecore/content</searchScope>
             
-            <!--
+            <itemsStore type="Cairngorm.ItemsStores.CookieItemsStore, Cairngorm">
+              <!--
+                A length of items stored in the cookie.
+                Default: 10
+              -->
+              <storedItemsCount>10</storedItemsCount>
+
+              <!--
                 Cookie's information used for recommendation.
                 Default:
                     - Name: recommend_items
@@ -65,15 +66,16 @@
                     - Path: /
                     - Secure: true
                     - HttpOnly: true
-            -->
-            <cookieInfo type="Cairngorm.Configurations.CookieInfo, Cairngorm">
-              <param desc="name">recommend_sample</param>
-              <maxAge>2592000</maxAge>
-              <domain></domain>
-              <path>/</path>
-              <secure>true</secure>
-              <httpOnly>true</httpOnly>
-            </cookieInfo>
+              -->
+              <cookieInfo type="Cairngorm.ItemsStores.CookieInfo, Cairngorm">
+                <param desc="name">recommend_sample</param>
+                <maxAge>2592000</maxAge>
+                <domain></domain>
+                <path>/</path>
+                <secure>true</secure>
+                <httpOnly>true</httpOnly>
+              </cookieInfo>
+            </itemsStore>
             
             <!--
                 (Required) The tag resolvers which resolve the tags from a context item. The following three are pre-defined resolvers.

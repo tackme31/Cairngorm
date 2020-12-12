@@ -1,10 +1,7 @@
 using Cairngorm.Configurations;
 using Sitecore;
 using Sitecore.Pipelines.HttpRequest;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Cairngorm.Pipelines
 {
@@ -45,30 +42,8 @@ namespace Cairngorm.Pipelines
                     continue;
                 }
 
-                var cookie = GetCookie(setting.CookieInfo);
-                var cookieItems = new Queue<string>(cookie.Value?.Split('|') ?? Array.Empty<string>());
-                cookieItems.Enqueue(Context.Item.ID.ToShortID().ToString());
-
-                while (cookieItems.Count > setting.StoredItemsCount)
-                {
-                    cookieItems.Dequeue();
-                }
-
-                HttpContext.Current.Response.Cookies[setting.CookieInfo.Name].Value = string.Join("|", cookieItems);
+                setting.ItemsStore.AddItem(Context.Item);
             }
-        }
-
-        private HttpCookie GetCookie(CookieInfo info)
-        {
-            var cookie = HttpContext.Current.Request.Cookies.Get(info.Name);
-            if (cookie == null)
-            {
-                // Ensure cookie exists
-                cookie = info.ToHttpCookie();
-                HttpContext.Current.Response.Cookies.Add(cookie);
-            }
-
-            return cookie;
         }
     }
 }
