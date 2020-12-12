@@ -79,16 +79,23 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |:-|:-|:-|:-|
 |SearchField|`string`|An index field name for search by tags.|`"_content"`|
 |SearchTemplates|`List<ID>`|Template IDs to be the target of the recommender.|Empty (All templates).|
-|StoredItemsCount|`int`|A length of items stored in the cookie.|`10`|
 |WeightPerMatching|`float`|A value to be added to boosting when a tag is matched.|`1.0`|
 |BoostGradually|`bool`|If enabled, the newer the item in the cookie, the more weight is given to it.|`false`|
 |FilterStoredItems|`bool`|If enabled, items stored in the cookie are filtered from results.|`false`|
 |FilterContextItem|`bool`|If enabled, a context item is filtered from results.|`true`|
 |SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
-|CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
+|ItemsStore|`ItemsStoreBase`|An items store to keep a context item in. See the Items Store section.|`CookieItemsStore`|
 |TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from an item in the cookie. See the Tag Resolver section for more information.|No resolver.|
 
-The `CookieInfo` property has the following properties.
+### Items Store
+By default, a context item is stored in a cookie. This behavior is due to the `CookieItemsStore` class, which has the following properties.
+
+|Property Name|Type|Description|Default Value|
+|:-|:-|:-|:-|
+|StoredItemsCount|`int`|A length of items stored in the cookie.|`10`|
+|CookieInfo|`CookieInfo`|Cookie's information used for recommendation.|See the next table.|
+
+And the `CookieInfo` property has the following properties.
 
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
@@ -98,6 +105,8 @@ The `CookieInfo` property has the following properties.
 |Path|`string`|A value of the cookie's `Path` attribute.|`"/"`|
 |Secure|`bool`|A value of the cookie's `Secure` attribute.|`true`|
 |HttpOnly|`bool`|A value of the cookie's `HttpOnly` attribute.|`true`|
+
+You can create a custom items store by implementing the `ItemsStoreBase` class.
 
 ### Tag Resolver
 There are three pre-defined resolvers:
