@@ -178,7 +178,7 @@ public class MyRecommenderFactory : Cairngorm.Services.DefaultRecommenderFactory
 }
 ```
 
-Finally, replace the factory to the default one.
+Finally, replace the default factory to the customized one.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
