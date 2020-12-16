@@ -80,15 +80,21 @@ PM> Install-Package Cairngorm
 |:-|:-|:-|:-|
 |SearchField|`string`|レコメンドを検索する際に使用するインデックスフィールドの名前です。|`"_content"`|
 |SearchTemplates|`List<ID>`|レコメンドの対象となるテンプレートの一覧です。|空 (全テンプレート)|
-|StoredItemsCount|`int`|クッキーに保持するアイテムの上限数です。|`10`|
 |WeightPerMatching|`float`|アイテムにタグが含まれていた場合に加算される重みです。|`1.0`|
 |BoostGradually|`bool`|有効化すると、最近アクセスしたアイテムほどレコメンドに反映されるようになります。|`false`|
 |FilterStoredItems|`bool`|有効化すると、クッキーに含まれているアイテムがレコメンドから除外されます。|`false`|
 |FilterContextItem|`bool`|有効化すると、`Context.Item`がレコメンドの対象から除外されます。|`true`|
 |SearchScope|`string`|設定したアイテム以下からレコメンドを取得するようになります。|未指定（全アイテムが対象）|
-|CookieInfo|`CookieInfo`|クッキーに関する情報です。詳しくは以下の表を参照してください。|テーブル参照|
+|ItemsStore|`ItemsStoreBase`|コンテキストアイテムを保持するためのアイテムストアを設定します。詳しくは「アイテムストア」セクションを参照してください。|`CookieItemsStore`|
 |TagResolvers|`List<TagResolverBase>`|アイテムから「タグ」を取得するタグリゾルバーの一覧です。詳しくは「タグリゾルバー」セクションを参照してください。|未指定|
 
+### アイテムストア
+デフォルトではコンテキストアイテムはクッキーに保持されます。この動作は`CookieItemsStore`によるもので、以下のプロパティが用意されています。
+
+|プロパティ名|型|説明|デフォルト値|
+|:-|:-|:-|:-|
+|StoredItemsCount|`int`|クッキーに保持するアイテムの上限数です。|`10`|
+|CookieInfo|`CookieInfo`|クッキーに関する情報です。詳しくは以下の表を参照してください。|テーブル参照|
 
 `CookieInfo`プロパティは以下のプロパティを設定可能です。
 
@@ -100,6 +106,8 @@ PM> Install-Package Cairngorm
 |Path|`string`|クッキーのの`Path`属性の値|`"/"`|
 |Secure|`bool`|クッキーの`Secure`属性の値|`true`|
 |HttpOnly|`bool`|クッキーの`HttpOnly`属性の値|`true`|
+
+`ItemsStoreBase`を継承したクラスを実装することで、独自のアイテムストアを作成することもできます。
 
 ### タグリゾルバー
 タグリゾルバーは、アイテムから「タグ」を取得するためのクラスです。デフォルトでは以下の3つのリゾルバーが用意されています。

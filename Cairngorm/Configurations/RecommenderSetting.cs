@@ -1,4 +1,5 @@
-﻿using Cairngorm.TagResolvers;
+﻿using Cairngorm.ItemsStores;
+using Cairngorm.TagResolvers;
 using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Xml;
@@ -21,13 +22,12 @@ namespace Cairngorm.Configurations
         public string Name { get; }
         public string SearchField { get; set; } = "_content";
         public List<ID> SearchTemplates { get; set; } = new List<ID>();
-        public int StoredItemsCount { get; set; } = 10;
         public float WeightPerMatching { get; set; } = 1.0f;
         public bool BoostGradually { get; set; } = false;
         public bool FilterStoredItems { get; set; } = false;
         public bool FilterContextItem { get; set; } = true;
         public string SearchScope { get; set; } = string.Empty;
-        public CookieInfo CookieInfo { get; set; } = new CookieInfo("recommend_items");
+        public ItemsStoreBase ItemsStore { get; set; } = new CookieItemsStore();
         public List<TagResolverBase> TagResolvers { get; }
 
         public void AddSearchTemplate(XmlNode node)

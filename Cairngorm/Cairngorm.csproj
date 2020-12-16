@@ -66,13 +66,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ItemsStores\CookieItemsStore.cs" />
+    <Compile Include="ItemsStores\ItemsStoreBase.cs" />
     <Compile Include="Services\Recommender.cs" />
     <Compile Include="Pipelines\QueueItemForRecommendation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultRecommender.cs" />
     <Compile Include="Services\DefaultRecommenderFactory.cs" />
     <Compile Include="Services\IRecommenderFactory.cs" />
-    <Compile Include="Configurations\CookieInfo.cs" />
+    <Compile Include="ItemsStores\CookieInfo.cs" />
     <Compile Include="Configurations\RecommenderConfiguration.cs" />
     <Compile Include="Configurations\RecommenderSetting.cs" />
     <Compile Include="TagResolvers\MultilistFieldTagResolver.cs" />

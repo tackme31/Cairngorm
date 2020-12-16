@@ -10,7 +10,6 @@ using Sitecore.Data.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Cairngorm.Services
 {
@@ -61,9 +60,7 @@ namespace Cairngorm.Services
 
             if (Setting.FilterStoredItems)
             {
-                var itemIds = new HashSet<ID>();
-                GetIdsFromCookie(Setting.CookieInfo.Name).ForEach(id => itemIds.Add(id));
-
+                var itemIds = new HashSet<ID>(Setting.ItemsStore.GetItems().Select(item => item.ID));
                 query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
             }
 
@@ -87,7 +84,7 @@ namespace Cairngorm.Services
         private IDictionary<string, float> GetTagsWeight()
         {
             var tagsWeight = new Dictionary<string, float>();
-            var items = GetIdsFromCookie(Setting.CookieInfo.Name).Select(Context.Database.GetItem).Where(item => item != null);
+            var items = Setting.ItemsStore.GetItems();
             foreach (var (item, index) in items.Select((item, index) => (item, index + 1)))
             {
                 var tags = Setting.TagResolvers.SelectMany(resolver => resolver.GetItemTags(item)).Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList();
@@ -111,12 +108,6 @@ namespace Cairngorm.Services
                     tagsWeight[tag] = value;
                 }
             }
-        }
-
-        private IList<ID> GetIdsFromCookie(string cookieName)
-        {
-            var cookieValue = HttpContext.Current.Request.Cookies[cookieName]?.Value ?? string.Empty;
-            return cookieValue.Split('|').Select(idStr => ID.Parse(idStr, ID.Null)).Where(id => !id.IsNull).ToList();
         }
     }
 }
