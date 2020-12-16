@@ -88,26 +88,22 @@ namespace Cairngorm.Services
             foreach (var (item, index) in items.Select((item, index) => (item, index + 1)))
             {
                 var tags = Setting.TagResolvers.SelectMany(resolver => resolver.GetItemTags(item)).Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList();
+                var weightRatio = Setting.BoostGradually ? (float) index / items.Count : 1;
                 foreach (var tag in tags)
                 {
-                    var weight = Setting.BoostGradually ? Setting.WeightPerMatching / index : Setting.WeightPerMatching;
-                    AddOrUpdate(tagsWeight, tag, weight);
+                    var weight = Setting.WeightPerMatching * weightRatio;
+                    if (tagsWeight.ContainsKey(tag))
+                    {
+                        tagsWeight[tag] += weight;
+                    }
+                    else
+                    {
+                        tagsWeight[tag] = weight;
+                    }
                 }
             }
 
             return tagsWeight;
-
-            void AddOrUpdate(Dictionary<string, float> dic, string tag, float value)
-            {
-                if (tagsWeight.ContainsKey(tag))
-                {
-                    tagsWeight[tag] += value;
-                }
-                else
-                {
-                    tagsWeight[tag] = value;
-                }
-            }
         }
     }
 }
