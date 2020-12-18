@@ -19,7 +19,7 @@ namespace Cairngorm.TagResolvers
             var delimiterAttr = XmlUtil.GetAttribute("delimiter", node);
             FieldName = XmlUtil.GetAttribute("fieldName", node);
             Delimiter = string.IsNullOrEmpty(delimiterAttr) ? default(char?) : delimiterAttr[0];
-            TargetField = XmlUtil.GetAttribute("TargetField", node);
+            TargetField = XmlUtil.GetAttribute("targetField", node);
         }
 
         public override List<string> GetItemTags(Item item)
