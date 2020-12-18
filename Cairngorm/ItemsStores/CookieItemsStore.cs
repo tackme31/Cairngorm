@@ -16,7 +16,7 @@ namespace Cairngorm.ItemsStores
         public override void AddItem(Item item)
         {
             var cookie = GetCookie();
-            var cookieItems = new Queue<string>(cookie.Value?.Split('|') ?? Array.Empty<string>());
+            var cookieItems = new Queue<string>(cookie.Value?.Split('|') ?? new string[0] { });
             cookieItems.Enqueue(item.ID.ToShortID().ToString());
 
             while (cookieItems.Count > StoredItemsCount)

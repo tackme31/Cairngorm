@@ -85,10 +85,10 @@ namespace Cairngorm.Services
         {
             var tagsWeight = new Dictionary<string, float>();
             var items = Setting.ItemsStore.GetItems();
-            foreach (var (item, index) in items.Select((item, index) => (item, index + 1)))
+            foreach (var item in items.Select((item, index) => new { Item = item, Index = index + 1 }))
             {
-                var tags = Setting.TagResolvers.SelectMany(resolver => resolver.GetItemTags(item)).Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList();
-                var weightRatio = Setting.BoostGradually ? (float) index / items.Count : 1;
+                var tags = Setting.TagResolvers.SelectMany(resolver => resolver.GetItemTags(item.Item)).Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList();
+                var weightRatio = Setting.BoostGradually ? (float) item.Index / items.Count : 1;
                 foreach (var tag in tags)
                 {
                     var weight = Setting.WeightPerMatching * weightRatio;
