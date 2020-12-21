@@ -29,7 +29,7 @@ namespace Cairngorm.ItemsStores
 
         public override List<Item> GetItems()
         {
-            var cookieValue = HttpContext.Current.Request.Cookies[CookieInfo.Name]?.Value ?? string.Empty;
+            var cookieValue = HttpContext.Current.Response.Cookies[CookieInfo.Name]?.Value ?? string.Empty;
             return cookieValue.Split('|')
                 .Select(idStr => ID.Parse(idStr, ID.Null))
                 .Where(id => !id.IsNull)
