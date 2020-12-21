@@ -32,7 +32,7 @@ namespace Cairngorm.ItemsStores
             var cookieValue = HttpContext.Current.Response.Cookies[CookieInfo.Name]?.Value ?? string.Empty;
             return cookieValue.Split('|')
                 .Select(idStr => ID.Parse(idStr, ID.Null))
-                .Where(id => !id.IsNull)
+                .Where(id => !ID.IsNullOrEmpty(id))
                 .Select(Context.Database.GetItem)
                 .Where(item => item != null).
                 ToList();

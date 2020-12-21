@@ -72,7 +72,7 @@ namespace Cairngorm.Services
             if (!string.IsNullOrWhiteSpace(Setting.SearchScope))
             {
                 var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
-                if (!scope.IsNull)
+                if (!ID.IsNullOrEmpty(scope))
                 {
                     query = query.Filter(item => item.Paths.Contains(scope));
                 }
