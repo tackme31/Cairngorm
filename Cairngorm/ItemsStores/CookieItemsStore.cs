@@ -34,8 +34,9 @@ namespace Cairngorm.ItemsStores
                 .Select(idStr => ID.Parse(idStr, ID.Null))
                 .Where(id => !ID.IsNullOrEmpty(id))
                 .Select(Context.Database.GetItem)
-                .Where(item => item != null).
-                ToList();
+                .Where(item => item != null)
+                .Reverse()
+                .ToList();
         }
 
         protected virtual HttpCookie GetCookie()
