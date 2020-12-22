@@ -79,13 +79,13 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |:-|:-|:-|:-|
 |SearchField|`string`|An index field name for search by tags.|`"_content"`|
 |SearchTemplates|`List<ID>`|Template IDs to be the target of the recommender.|Empty (All templates).|
-|WeightPerMatching|`float`|A value to be added to boosting when a tag is matched.|`1.0`|
-|BoostGradually|`bool`|If enabled, the newer the item in the cookie, the more weight is given to it.|`false`|
-|FilterStoredItems|`bool`|If enabled, items stored in the cookie are filtered from results.|`false`|
-|FilterContextItem|`bool`|If enabled, a context item is filtered from results.|`true`|
-|SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
+|TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from an item in ItemsStore. See the Tag Resolver section for more information.|No resolver.|
 |ItemsStore|`ItemsStoreBase`|An items store to keep a context item in. See the Items Store section.|`CookieItemsStore`|
-|TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from an item in the cookie. See the Tag Resolver section for more information.|No resolver.|
+|WeightPerMatching|`float`|A value to be added to boosting when a tag is matched.|`1.0`|
+|BoostGradually|`bool`|When enabled, the more items that are newly added to the ItemsStore, the more they will affect the recommendation results.|`false`|
+|FilterStoredItems|`bool`|When enabled, items contained in the ItemsStore will be excluded from the recommendation results.|`false`|
+|FilterContextItem|`bool`|When enabled, a context item is filtered from results.|`true`|
+|SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
 
 ### Items Store
 By default, a context item is stored in a cookie. This behavior is due to the `CookieItemsStore` class, which has the following properties.
