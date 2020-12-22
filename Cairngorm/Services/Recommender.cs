@@ -5,6 +5,6 @@ namespace Cairngorm.Services
 {
     public abstract class Recommender
     {
-        public abstract List<Item> GetRecommedation(int count = 10);
+        public abstract List<Item> GetRecommendation(int count = 10);
     }
 }

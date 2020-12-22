@@ -22,7 +22,7 @@ namespace Cairngorm.Services
             Setting = setting;
         }
 
-        public override List<Item> GetRecommedation(int count = 10)
+        public override List<Item> GetRecommendation(int count = 10)
         {
             if (count <= 0)
             {
