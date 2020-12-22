@@ -27,7 +27,8 @@
             <weightPerMatching>1.0</weightPerMatching>
             
             <!--
-                When enabled, the more items that are newly added to the ItemsStore, the more they will affect the recommendation results.
+                When enabled, gives higher weight to items retrieved from the ItemStore that are closer to the beginning.
+                By default, newly added items to the cookie are weighted more heavily.
                 Default: false
             -->
             <boostGradually>false</boostGradually>

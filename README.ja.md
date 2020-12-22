@@ -80,13 +80,13 @@ PM> Install-Package Cairngorm
 |:-|:-|:-|:-|
 |SearchField|`string`|レコメンドを検索する際に使用するインデックスフィールドの名前です。|`"_content"`|
 |SearchTemplates|`List<ID>`|レコメンドの対象となるテンプレートの一覧です。|空 (全テンプレート)|
+|SearchScope|`string`|設定したアイテム以下からレコメンドを取得するようになります。|未指定（全アイテムが対象）|
 |TagResolvers|`List<TagResolverBase>`|アイテムから「タグ」を取得するタグリゾルバーの一覧です。詳しくは「タグリゾルバー」セクションを参照してください。|未指定|
-|ItemsStore|`ItemsStoreBase`|コンテキストアイテムを保持するためのアイテムストアを設定します。詳しくは「アイテムストア」セクションを参照してください。|`CookieItemsStore`|
+|ItemsStore|`ItemsStoreBase`|コンテキストアイテムを保持するためのアイテムストアを設定します。デフォルトではクッキーに保持します。詳しくは「アイテムストア」セクションを参照してください。|`CookieItemsStore`|
 |WeightPerMatching|`float`|アイテムにタグが含まれていた場合に加算される重みです。|`1.0`|
-|BoostGradually|`bool`|有効化すると、アイテムストアに新しく追加されたアイテムほどレコメンド結果に影響を与えるようになります。|`false`|
+|BoostGradually|`bool`|有効化すると、ItemStoreから取得したアイテムのリストで先頭により近いものほど高い重みを付与します。デフォルトでは新しくクッキーに追加されたアイテムほど重み付けされます。|`false`|
 |FilterStoredItems|`bool`|有効化すると、アイテムストアに含まれているアイテムがレコメンドから除外されます。|`false`|
 |FilterContextItem|`bool`|有効化すると、`Context.Item`がレコメンドの対象から除外されます。|`true`|
-|SearchScope|`string`|設定したアイテム以下からレコメンドを取得するようになります。|未指定（全アイテムが対象）|
 
 ### アイテムストア
 デフォルトではコンテキストアイテムはクッキーに保持されます。この動作は`CookieItemsStore`によるもので、以下のプロパティが用意されています。
