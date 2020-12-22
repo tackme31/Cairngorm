@@ -27,19 +27,19 @@
             <weightPerMatching>1.0</weightPerMatching>
             
             <!--
-                When set true, the newer the item in the cookie, the more weight is given to it.
+                When enabled, the more items that are newly added to the ItemsStore, the more they will affect the recommendation results.
                 Default: false
             -->
             <boostGradually>false</boostGradually>
             
             <!--
-                When set true, the items stored in the cookie are filtered from recommendation.
+                When enabled, items contained in the ItemsStore will be excluded from the recommendation results.
                 Default: false
             -->
             <filterStoredItems>false</filterStoredItems>
             
             <!--
-                When set true, a context item is filtered from recommendation.
+                When enabled, a context item is filtered from results.
                 Default: true
             -->
             <filterContextItem>true</filterContextItem>
