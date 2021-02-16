@@ -39,7 +39,7 @@ namespace Cairngorm.ItemsStores
 
             var ids = cookie.Value.Split('|').Select(idStr => ID.Parse(idStr, ID.Null));
             var items = ids.Select(Context.Database.GetItem).Where(item => item != null);
-            return items.Reverse().Take(10).ToList();
+            return items.Reverse().ToList();
         }
 
         protected virtual HttpCookie GetCookie()
