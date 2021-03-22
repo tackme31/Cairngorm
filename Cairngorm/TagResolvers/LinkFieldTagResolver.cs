@@ -42,7 +42,7 @@ namespace Cairngorm.TagResolvers
                 return new List<string> { value };
             }
 
-            return value.Split(new[] { Delimiter.Value }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            return value.Split(new[] { Delimiter.Value }, StringSplitOptions.RemoveEmptyEntries).Select(tag => tag.Trim()).ToList();
         }
     }
 }
