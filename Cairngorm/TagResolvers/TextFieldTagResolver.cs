@@ -26,7 +26,7 @@ namespace Cairngorm.TagResolvers
                 return new List<string> { item[FieldName] };
             }
 
-            return item[FieldName].Split(new[] { Delimiter.Value }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            return item[FieldName].Split(new[] { Delimiter.Value }, StringSplitOptions.RemoveEmptyEntries).Select(tag => tag.Trim()).ToList();
         }
     }
 }
