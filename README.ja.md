@@ -56,7 +56,7 @@ PM> Install-Package Cairngorm
     ```csharp
     public class SampleRecommendationRepository
     {
-        protected Recommender SampleRecommender { get; }
+        protected IRecommender SampleRecommender { get; }
 
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {
