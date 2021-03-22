@@ -35,7 +35,7 @@ The recommender searches recommended items based on "Tag", resolved from an item
                 <param desc="name">$(name)</param>
 
                 <!-- Add template name or ID to be the target of the recommender. -->
-                <searchTemplates hint="raw:AddSearchTemplate">
+                <searchTemplates hint="list">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
 

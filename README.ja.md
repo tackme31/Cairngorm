@@ -36,7 +36,7 @@ PM> Install-Package Cairngorm
                 <param desc="name">$(name)</param>
 
                 <!-- レコメンドの対象となるアイテムのテンプレート名かIDを設定しています。 -->
-                <searchTemplates hint="raw:AddSearchTemplate">
+                <searchTemplates hint="list">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
 
