@@ -11,7 +11,7 @@ namespace Cairngorm.Services
         {
         }
 
-        public virtual Recommender GetRecommender(string name)
+        public virtual IRecommender GetRecommender(string name)
         {
             Assert.ArgumentNotNullOrEmpty(name, nameof(name));
 

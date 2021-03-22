@@ -55,7 +55,7 @@ The recommender searches recommended items based on "Tag", resolved from an item
     ```csharp
     public class SampleRecommendationRepository
     {
-        protected Recommender SampleRecommender { get; }
+        protected IRecommender SampleRecommender { get; }
 
         public SampleRecommendationRepository(IRecommenderFactory factory)
         {

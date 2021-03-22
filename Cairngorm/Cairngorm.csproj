@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="ItemsStores\CookieItemsStore.cs" />
     <Compile Include="ItemsStores\ItemsStoreBase.cs" />
-    <Compile Include="Services\Recommender.cs" />
+    <Compile Include="Services\IRecommender.cs" />
     <Compile Include="Pipelines\QueueItemForRecommendation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DefaultRecommender.cs" />

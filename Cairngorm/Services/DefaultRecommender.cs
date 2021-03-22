@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace Cairngorm.Services
 {
-    public class DefaultRecommender<T> : Recommender where T : SearchResultItem
+    public class DefaultRecommender<T> : IRecommender where T : SearchResultItem
     {
         protected RecommenderSetting Setting { get; }
 
@@ -22,7 +22,7 @@ namespace Cairngorm.Services
             Setting = setting;
         }
 
-        public override List<Item> GetRecommendation(int count = 10)
+        public virtual List<Item> GetRecommendation(int count = 10)
         {
             if (count <= 0)
             {
