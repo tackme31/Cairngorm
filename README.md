@@ -34,7 +34,7 @@ The recommender searches recommended items based on "Tag", resolved from an item
                 <!-- Specify recommender name. -->
                 <param desc="name">$(name)</param>
 
-                <!-- Add template IDs to be the target of the recommender. -->
+                <!-- Add template name or ID to be the target of the recommender. -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
@@ -78,7 +78,7 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |Property Name|Type|Description|Default Value|
 |:-|:-|:-|:-|
 |SearchField|`string`|An index field name for search by tags.|`"_content"`|
-|SearchTemplates|`List<ID>`|Template IDs to be the target of the recommender.|Empty (All templates).|
+|SearchTemplates|`List<string>`|Template name or id to be the target of the recommender.|Empty (All templates).|
 |SearchScope|`string`|A root item where it's searched from (Path or ID).|No scope.|
 |TagResolvers|`List<TagResolverBase>`|Tag resolvers which resolve the tags from an item. See the Tag Resolver section for more information.|No resolver.|
 |ItemsStore|`ItemsStoreBase`|A store to keep context items. By default, the items are stored in a cookie. See the Items Store section.|`CookieItemsStore`|

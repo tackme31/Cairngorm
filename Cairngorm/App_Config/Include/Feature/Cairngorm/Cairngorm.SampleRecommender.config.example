@@ -13,11 +13,12 @@
             <searchField>_content</searchField>
             
             <!--
-                The template IDs to filter the recommendation items.
+                Template name or ID to filter the recommendation items.
                 Default: Empty (All templates)
             -->
-            <searchTemplates hint="raw:AddSearchTemplate">
-              <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
+            <searchTemplates hint="list">
+              <template>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</template>
+              <template>Sample Item</template>
             </searchTemplates>
             
             <!--
