@@ -35,7 +35,7 @@ PM> Install-Package Cairngorm
                 <!-- レコメンダーの名前（親ノードのname属性の値を使用しています） -->
                 <param desc="name">$(name)</param>
 
-                <!-- レコメンドの対象となるアイテムのテンプレート一覧を設定しています。 -->
+                <!-- レコメンドの対象となるアイテムのテンプレート名かIDを設定しています。 -->
                 <searchTemplates hint="raw:AddSearchTemplate">
                   <SampleItem>{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}</SampleItem>
                 </searchTemplates>
@@ -79,7 +79,7 @@ PM> Install-Package Cairngorm
 |プロパティ名|型|説明|デフォルト値|
 |:-|:-|:-|:-|
 |SearchField|`string`|レコメンドを検索する際に使用するインデックスフィールドの名前です。|`"_content"`|
-|SearchTemplates|`List<ID>`|レコメンドの対象となるテンプレートの一覧です。|空 (全テンプレート)|
+|SearchTemplates|`List<string>`|レコメンドの対象となるテンプレートの名前またはIDの一覧です。|空 (全テンプレート)|
 |SearchScope|`string`|設定したアイテム以下からレコメンドを取得するようになります。|未指定（全アイテムが対象）|
 |TagResolvers|`List<TagResolverBase>`|アイテムから「タグ」を取得するタグリゾルバーの一覧です。詳しくは「タグリゾルバー」セクションを参照してください。|未指定|
 |ItemsStore|`ItemsStoreBase`|コンテキストアイテムを保持するためのアイテムストアを設定します。デフォルトではクッキーに保持します。詳しくは「アイテムストア」セクションを参照してください。|`CookieItemsStore`|
