@@ -54,7 +54,9 @@ namespace Cairngorm.Services
         {
             if (Setting.SearchTemplates.Any())
             {
-                var templatesPred = Setting.SearchTemplates.Aggregate(PredicateBuilder.False<T>(), (acc, id) => acc.Or(item => item.TemplateId == id));
+                var templatesPred = Setting.SearchTemplates.Aggregate(
+                    PredicateBuilder.False<T>(),
+                    (acc, template) => ID.TryParse(template, out var id) ? acc.Or(item => item.TemplateId == id) : acc.Or(item => item.TemplateName == template));
                 query = query.Filter(templatesPred);
             }
 

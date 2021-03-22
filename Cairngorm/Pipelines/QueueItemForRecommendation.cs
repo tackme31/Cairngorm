@@ -1,6 +1,9 @@
 using Cairngorm.Configurations;
 using Sitecore;
+using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Pipelines.HttpRequest;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cairngorm.Pipelines
@@ -37,7 +40,7 @@ namespace Cairngorm.Pipelines
                     continue;
                 }
 
-                if (setting.SearchTemplates.Any() && setting.SearchTemplates.All(id => id != Context.Item.TemplateID))
+                if (!IsTargetTemplate(setting.SearchTemplates, Context.Item))
                 {
                     continue;
                 }
@@ -45,5 +48,9 @@ namespace Cairngorm.Pipelines
                 setting.ItemsStore.AddItem(Context.Item);
             }
         }
+
+        private static bool IsTargetTemplate(List<string> templates, Item item)
+            => !templates.Any()
+            || templates.Any(template => ID.TryParse(template, out var id) ? item.TemplateID == id : item.TemplateName == template);
     }
 }
