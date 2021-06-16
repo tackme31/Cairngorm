@@ -36,9 +36,9 @@
             
             <!--
                 When enabled, items contained in the ItemsStore will be excluded from the recommendation results.
-                Default: false
+                Default: true
             -->
-            <filterStoredItems>false</filterStoredItems>
+            <filterStoredItems>true</filterStoredItems>
             
             <!--
                 When enabled, a context item is filtered from results.

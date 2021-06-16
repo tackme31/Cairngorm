@@ -85,7 +85,7 @@ PM> Install-Package Cairngorm
 |ItemsStore|`ItemsStoreBase`|コンテキストアイテムを保持するためのアイテムストアを設定します。デフォルトではクッキーに保持します。詳しくは「アイテムストア」セクションを参照してください。|`CookieItemsStore`|
 |WeightPerMatching|`float`|アイテムにタグが含まれていた場合に加算される重みです。|`1.0`|
 |BoostGradually|`bool`|有効化すると、ItemStoreから取得したアイテムのリストで先頭により近いものほど高い重みを付与します。デフォルトでは新しくクッキーに追加されたアイテムほど重み付けされます。|`false`|
-|FilterStoredItems|`bool`|有効化すると、アイテムストアに含まれているアイテムがレコメンドから除外されます。|`false`|
+|FilterStoredItems|`bool`|有効化すると、アイテムストアに含まれているアイテムがレコメンドから除外されます。|`true`|
 |FilterContextItem|`bool`|有効化すると、`Context.Item`がレコメンドの対象から除外されます。|`true`|
 
 ### アイテムストア
