@@ -23,7 +23,7 @@ namespace Cairngorm.Configurations
         public List<string> SearchTemplates { get; set; } = new List<string>();
         public float WeightPerMatching { get; set; } = 1.0f;
         public bool BoostGradually { get; set; } = false;
-        public bool FilterStoredItems { get; set; } = false;
+        public bool FilterStoredItems { get; set; } = true;
         public bool FilterContextItem { get; set; } = true;
         public string SearchScope { get; set; } = string.Empty;
         public ItemsStoreBase ItemsStore { get; set; } = new CookieItemsStore();

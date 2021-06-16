@@ -84,7 +84,7 @@ You can see a sample configuration from [here](Cairngorm/App_Config/Include/Feat
 |ItemsStore|`ItemsStoreBase`|A store to keep context items. By default, the items are stored in a cookie. See the Items Store section.|`CookieItemsStore`|
 |WeightPerMatching|`float`|A value to be added to boosting when a tag is matched.|`1.0`|
 |BoostGradually|`bool`|When enabled, gives higher weight to items retrieved from the ItemStore that are closer to the beginning. By default, newly added items to the cookie are weighted more heavily.|`false`|
-|FilterStoredItems|`bool`|When enabled, items contained in the ItemsStore will be excluded from the recommendation results.|`false`|
+|FilterStoredItems|`bool`|When enabled, items contained in the ItemsStore will be excluded from the recommendation results.|`true`|
 |FilterContextItem|`bool`|When enabled, a context item is filtered from results.|`true`|
 
 ### Items Store
