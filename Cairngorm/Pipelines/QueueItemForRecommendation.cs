@@ -2,6 +2,7 @@ using Cairngorm.Configurations;
 using Sitecore;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Pipelines.HttpRequest;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,11 @@ namespace Cairngorm.Pipelines
                     continue;
                 }
 
+                if (!IsInTargetScope(setting.SearchScope, Context.Item))
+                {
+                    continue;
+                }
+
                 setting.ItemsStore.AddItem(Context.Item);
             }
         }
@@ -52,5 +58,24 @@ namespace Cairngorm.Pipelines
         private static bool IsTargetTemplate(List<string> templates, Item item)
             => !templates.Any()
             || templates.Any(template => ID.TryParse(template, out var id) ? item.TemplateID == id : item.TemplateName == template);
+
+        private bool IsInTargetScope(string pathOrId, Item item)
+        {
+            if (string.IsNullOrWhiteSpace(pathOrId))
+            {
+                return true;
+            }
+
+            var scope = ID.TryParse(pathOrId, out var id)
+                ? item.Database.GetItem(id)
+                : item.Database.GetItem(pathOrId);
+            if (scope == null)
+            {
+                Log.Warn($"The specified search scope '{pathOrId}' does not exist. No scopes are used instead.", this);
+                return true;
+            }
+
+            return item.Axes.IsDescendantOf(scope);
+        }
     }
 }
