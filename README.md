@@ -5,7 +5,7 @@ English | [日本語](README.ja.md)
 # Cairngorm
 *Cairngorm* is an easy-to-use recommender library for Sitecore. This library has the following features:
 
-- The simple API.
+- Simple API.
 - Work with a small configuration.
 - No machine learning needed.
 - Customizable.
