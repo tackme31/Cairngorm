@@ -22,7 +22,7 @@ namespace Cairngorm.Services
             Setting = setting;
         }
 
-        public virtual List<Item> GetRecommendation(int count = 10)
+        public List<Item> GetRecommendation(int count = 10)
         {
             if (count <= 0)
             {
@@ -32,14 +32,17 @@ namespace Cairngorm.Services
             var index = GetSearchIndex();
             using (var context = index.CreateSearchContext())
             {
-                var tagsWeight = GetTagsWeight();
-                var boosting = tagsWeight.Keys.Aggregate(
+                var boostDataset = GetBoostDataset();
+                var boosting = boostDataset.Aggregate(
                     PredicateBuilder.Create<T>(item => item.Name.MatchWildcard("*").Boost(0.0f)),
-                    (acc, tag) => acc.Or(item => item[Setting.SearchField].Equals(tag).Boost(tagsWeight[tag])));
+                    (acc, data) => acc.Or(item => item[Setting.SearchField].Equals(data.Tag).Boost(data.Weight)));
 
                 var query = context.GetQueryable<T>();
                 query = ApplyItemsFilter(query);
-                query = ApplySettingFilter(query);
+                query = ApplySearchTemplatesFilter(query);
+                query = ApplyStoredItemsFilter(query);
+                query = ApplyContextItemFilter(query);
+                query = ApplySearchScopeFilter(query);
                 query = query.Where(boosting).OrderByDescending(item => item["score"]).Take(count);
 
                 return query.ToList().Select(doc => doc.GetItem()).ToList();
@@ -50,42 +53,59 @@ namespace Cairngorm.Services
 
         protected virtual IQueryable<T> ApplyItemsFilter(IQueryable<T> query) => query.Filter(item => item.Language == Context.Language.Name);
 
-        private IQueryable<T> ApplySettingFilter(IQueryable<T> query)
+        protected virtual IQueryable<T> ApplySearchTemplatesFilter(IQueryable<T> query)
         {
-            if (Setting.SearchTemplates.Any())
+            if (!Setting.SearchTemplates.Any())
             {
-                var templatesPred = Setting.SearchTemplates.Aggregate(
-                    PredicateBuilder.False<T>(),
-                    (acc, template) => ID.TryParse(template, out var id) ? acc.Or(item => item.TemplateId == id) : acc.Or(item => item.TemplateName == template));
-                query = query.Filter(templatesPred);
+                return query;
             }
 
-            if (Setting.FilterStoredItems)
-            {
-                var itemIds = new HashSet<ID>(Setting.ItemsStore.GetItems().Select(item => item.ID));
-                query = itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
-            }
-
-            if (Setting.FilterContextItem)
-            {
-                query = query.Filter(item => item.ItemId != Context.Item.ID);
-            }
-
-            if (!string.IsNullOrWhiteSpace(Setting.SearchScope))
-            {
-                var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
-                if (!ID.IsNullOrEmpty(scope))
-                {
-                    query = query.Filter(item => item.Paths.Contains(scope));
-                }
-            }
-
-            return query;
+            var templatesPred = Setting.SearchTemplates.Aggregate(
+                PredicateBuilder.False<T>(),
+                (acc, template) => ID.TryParse(template, out var id) ? acc.Or(item => item.TemplateId == id) : acc.Or(item => item.TemplateName == template));
+            return query.Filter(templatesPred);
         }
 
-        private IDictionary<string, float> GetTagsWeight()
+        protected virtual IQueryable<T> ApplyStoredItemsFilter(IQueryable<T> query)
         {
-            var tagsWeight = new Dictionary<string, float>();
+            if (!Setting.FilterStoredItems)
+            {
+                return query;
+            }
+
+            var itemIds = new HashSet<ID>(Setting.ItemsStore.GetItems().Select(item => item.ID));
+            return itemIds.Aggregate(query, (acc, id) => acc.Filter(item => item.ItemId != id));
+        }
+
+        protected virtual IQueryable<T> ApplyContextItemFilter(IQueryable<T> query)
+        {
+            if (!Setting.FilterContextItem)
+            {
+                return query;
+            }
+
+            return query.Filter(item => item.ItemId != Context.Item.ID);
+        }
+
+        protected virtual IQueryable<T> ApplySearchScopeFilter(IQueryable<T> query)
+        {
+            if (string.IsNullOrWhiteSpace(Setting.SearchScope))
+            {
+                return query;
+            }
+
+            var scope = ID.IsID(Setting.SearchScope) ? ID.Parse(Setting.SearchScope) : Context.Database.GetItem(Setting.SearchScope)?.ID;
+            if (ID.IsNullOrEmpty(scope))
+            {
+                return query;
+            }
+
+            return query.Filter(item => item.Paths.Contains(scope));
+        }
+
+        private List<BoostData> GetBoostDataset()
+        {
+            var tagAndWeight = new Dictionary<string, float>();
             var items = Setting.ItemsStore.GetItems();
             foreach (var item in items.Select((item, index) => new { item, index }))
             {
@@ -96,18 +116,30 @@ namespace Cairngorm.Services
                 foreach (var tag in tags)
                 {
                     var weight = Setting.WeightPerMatching * weightRatio;
-                    if (tagsWeight.ContainsKey(tag))
+                    if (tagAndWeight.ContainsKey(tag))
                     {
-                        tagsWeight[tag] += weight;
+                        tagAndWeight[tag] += weight;
                     }
                     else
                     {
-                        tagsWeight[tag] = weight;
+                        tagAndWeight[tag] = weight;
                     }
                 }
             }
 
-            return tagsWeight;
+            return tagAndWeight.Select(tw => new BoostData(tw.Key, tw.Value)).ToList();
+        }
+
+        private class BoostData
+        {
+            public BoostData(string tag, float weight)
+            {
+                Tag = tag;
+                Weight = weight;
+            }
+
+            public string Tag { get; }
+            public float Weight { get; }
         }
     }
 }
