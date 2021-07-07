@@ -194,7 +194,14 @@ Finally, replace the default factory to the customized one.
 ```
 
 ## Compatibility
-This library is only tested on Sitecore 9.3 with Solr. It should also work on Sitecore 9.x, but if it doesn't please let me know.
+This library is only tested on the following versions.
+
+- Sitecore 9.1.0
+- Sitecore 9.1.1
+- Sitecore 9.3.0
+- Sitecore 10.1.1
+
+It should also work on Sitecore 9.x and 10.x, but if it doesn't please let me know.
 
 ## Author
 - Takumi Yamada (xirtardauq@gmail.com)
