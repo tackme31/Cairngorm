@@ -196,7 +196,14 @@ public class MyRecommenderFactory : Cairngorm.Services.DefaultRecommenderFactory
 ```
 
 ## サポート情報
-このライブラリはSitecore 9.3とSolrでのみテストしています。Sitecore 9.xでも動作するはずですが、動作しない場合はご連絡ください。
+このライブラリは以下のバージョンでのみテストしています。
+
+- Sitecore XP 9.1.0
+- Sitecore XP 9.1.1
+- Sitecore XP 9.3.0
+- Sitecore XP 10.1.1
+
+Sitecore XP 9.x、10.xでも動作するはずですが、動作しない場合はご連絡ください。
 
 ## 作者
 - 山田 拓実 (xirtardauq@gmail.com)
