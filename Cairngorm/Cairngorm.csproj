@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContentSearch\RecommenderTagResolversIndexField.cs" />
     <Compile Include="ItemsStores\CookieItemsStore.cs" />
     <Compile Include="ItemsStores\ItemsStoreBase.cs" />
     <Compile Include="Services\IRecommender.cs" />
