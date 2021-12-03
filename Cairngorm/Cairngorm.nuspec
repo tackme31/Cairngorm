@@ -5,11 +5,11 @@
     <version>$version$</version>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <iconUrl>https://raw.githubusercontent.com/xirtardauq/Cairngorm/main/img/icon.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/tackme31/Cairngorm/main/img/icon.png</iconUrl>
     <icon>images\icon.png</icon>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/xirtardauq/Cairngorm</projectUrl>
+    <projectUrl>https://github.com/tackme31/Cairngorm</projectUrl>
     <description>$description$</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright @2020 $author$</copyright>
